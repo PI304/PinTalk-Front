@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         Pretendard: ['Pretendard-Regular', 'sans-serif'],
+        Montserrat: ['Montserrat', 'sans-serif'],
       },
       colors: {
         'custom-main': '#2F80ED',
