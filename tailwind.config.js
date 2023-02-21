@@ -16,7 +16,9 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        Pretendard: ['Pretendard-Regular', 'sans-serif'],
+        PretendardMedium: ['Pretendard-Medium', 'sans-serif'],
+        PretendardSemibold: ['Pretendard-SemiBold', 'sans-serif'],
+        PretendardBold: ['Pretendard-Bold', 'sans-serif'],
         Montserrat: ['Montserrat', 'sans-serif'],
       },
       fontSize: {
@@ -63,7 +65,7 @@ module.exports = {
           main: '#2F80ED',
           sub: '#D0DFFB',
         },
-        inactive: '#EEEEF2',
+        inactive: '#EDF1F8',
         BG: '#F8F8F8',
         gradi: {
           1: '#F4F8FB',
@@ -80,8 +82,16 @@ module.exports = {
         },
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-radial':
+          'radial-gradient(47.92% 71.28% at 27.45% 52.08%,var(--tw-gradient-stops))',
       },
+    },
+    screens: {
+      xs: '375px',
+      sm: '640px',
+      md: '768px',
+      lg: '1240px',
+      xl: '1280px',
     },
   },
   plugins: [],
