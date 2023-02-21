@@ -1,12 +1,14 @@
 import '@/styles/globals.css';
+import { ReactElement } from 'react';
 import { GlobalStyle } from '@/styles/globals';
-import type { AppProps } from 'next/app';
+import { AppPropsWithLayout } from '@/@types/base';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
   return (
-    <>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </>
+    <div className='font-PretendardMedium'>
+      {/* <GlobalStyle /> */}
+      {getLayout(<Component {...pageProps} />)}
+    </div>
   );
 }
