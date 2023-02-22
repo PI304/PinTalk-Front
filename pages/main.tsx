@@ -1,5 +1,5 @@
 import { LoginLayout } from '@/components/common/layouts';
-import { MainPage } from '@/components/main/MainPage';
+import { MainPage } from '@/components/main';
 import { ReactElement } from 'react';
 
 export default function main() {
