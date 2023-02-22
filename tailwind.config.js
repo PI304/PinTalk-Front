@@ -16,6 +16,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        PretendardRegular: ['Pretendard-Regular', 'sans-serif'],
         PretendardMedium: ['Pretendard-Medium', 'sans-serif'],
         PretendardSemibold: ['Pretendard-SemiBold', 'sans-serif'],
         PretendardBold: ['Pretendard-Bold', 'sans-serif'],
@@ -64,8 +65,8 @@ module.exports = {
         blue: {
           main: '#2F80ED',
           sub: '#D0DFFB',
+          sub2: '#EDF1F8',
         },
-        inactive: '#EDF1F8',
         BG: '#F8F8F8',
         gradi: {
           1: '#F4F8FB',
@@ -87,11 +88,37 @@ module.exports = {
       },
     },
     screens: {
-      xs: '375px',
-      sm: '640px',
-      md: '768px',
-      lg: '1240px',
-      xl: '1280px',
+      '2xl': { max: '1535px' },
+      // => @media (max-width: 1535px) { ... }
+
+      xl: { max: '1279px' },
+      // => @media (max-width: 1279px) { ... }
+
+      lg: { max: '1023px' },
+      // => @media (max-width: 1023px) { ... }
+
+      md: { max: '767px' },
+      // => @media (max-width: 767px) { ... }
+
+      sm: { max: '639px' },
+      // => @media (max-width: 639px) { ... }
+      'sm-min': '640px',
+      // => @media (min-width: 640px) { ... }
+
+      'md-min': '768px',
+      // => @media (min-width: 768px) { ... }
+
+      'lg-min': '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      'xl-min': '1280px',
+      // => @media (min-width: 1280px) { ... }
+
+      '2xl-min': '1536px',
+      // => @media (min-width: 1536px) { ... }
+    },
+    boxShadow: {
+      custom: '0 0px 8px 15px rgba(186, 186, 186, 0.1)',
     },
   },
   plugins: [],
