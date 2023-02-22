@@ -16,6 +16,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
+        PretendardRegular: ['Pretendard-Regular', 'sans-serif'],
         PretendardMedium: ['Pretendard-Medium', 'sans-serif'],
         PretendardSemibold: ['Pretendard-SemiBold', 'sans-serif'],
         PretendardBold: ['Pretendard-Bold', 'sans-serif'],
@@ -64,8 +65,8 @@ module.exports = {
         blue: {
           main: '#2F80ED',
           sub: '#D0DFFB',
+          sub2: '#EDF1F8',
         },
-        inactive: '#EDF1F8',
         BG: '#F8F8F8',
         gradi: {
           1: '#F4F8FB',
@@ -115,6 +116,9 @@ module.exports = {
 
       '2xl-min': '1536px',
       // => @media (min-width: 1536px) { ... }
+    },
+    boxShadow: {
+      custom: '0 0px 8px 15px rgba(186, 186, 186, 0.1)',
     },
   },
   plugins: [],
