@@ -11,7 +11,7 @@ jobs:
       steps:
         - name: Kill
           run: |
-            kill $(lsof -t -i:3000)
+            kill $(lsof -t -i:3000) || echo 'No previous process'
   CI_CD:
     name: CI/CD
     runs-on: [self-hosted, 'PinTalk runner']
