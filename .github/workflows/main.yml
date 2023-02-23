@@ -1,4 +1,4 @@
-name: PinTalk
+name: PinTalk-Front
 
 on:
   push:
