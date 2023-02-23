@@ -1,17 +1,19 @@
-name: PinTalk-Front
+name: develop
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
 
 jobs:
   CI_CD:
     name: CI/CD
-    runs-on: [self-hosted, PinTalk runner]
+    runs-on: [self-hosted, 'PinTalk runner']
     steps:
       - name: Deploy
         run: |
-          cd ~/PinTalk
+          cd ~/PinTalk-Front
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
           npm run build
+          
+          nohup npm run start &
