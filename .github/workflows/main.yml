@@ -16,7 +16,7 @@ jobs:
           npm install
           npm run build
           kill $(lsof -t -i:3000) || echo 'No previous process'
-          nohup npm run start > nohup.out 2> nohup.err < /dev/null &
+          screen -dmS server npm run start
           # 기존에 실행 중인 서버가 있을 경우, 새로운 서버를 실행하지 않도록 하기 위해
           # `PORT` 환경 변수를 설정합니다.
           # PORT=3000 npm run build   
