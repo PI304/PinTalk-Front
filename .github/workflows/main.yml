@@ -7,7 +7,7 @@ on:
 jobs:
   CI_CD:
     name: CI/CD
-    runs-on: [self-hosted, PinTalk-runner]
+    runs-on: [self-hosted, PinTalk runner]
     steps:
       - name: Deploy
         run: |
