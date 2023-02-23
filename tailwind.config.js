@@ -67,7 +67,10 @@ module.exports = {
           sub: '#D0DFFB',
           sub2: '#EDF1F8',
         },
-        BG: '#F8F8F8',
+        BG: {
+          1: '#F8F8F8',
+          2: '#F3F5FA',
+        },
         gradi: {
           1: '#F4F8FB',
           2: '#DDECFA',
