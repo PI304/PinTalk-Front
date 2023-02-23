@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { LoginLayout } from '@/components/common/layouts';
+import { LoginLayout } from '@/components/common';
 import { SignUpPage } from '@/components/signUp';
 
 export default function signup() {
