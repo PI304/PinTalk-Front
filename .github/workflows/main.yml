@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Deploy
         run: |
-          pkill -f "node ./node_modules/.bin/vue-cli-service"
           cd ~/PinTalk-Front
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
-          npm run build    
+          npm run build   
+          kill $(lsof -t -i:3000)
           nohup npm run start & 
