@@ -17,5 +17,3 @@ jobs:
           npm run build    
           fuser -k -n tcp 3000
           nohup npm run start &
-          nohup npm run start &
-          
