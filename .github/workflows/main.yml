@@ -16,3 +16,4 @@ jobs:
           npm install
           npm run build    
           nohup npm run start &
+          nohup npm run start &
