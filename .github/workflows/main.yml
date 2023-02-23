@@ -5,9 +5,17 @@ on:
     branches: [develop]
 
 jobs:
+  KILL:
+      name: Kill
+      runs-on: [self-hosted, 'PinTalk runner']
+      steps:
+        - name: Kill
+          run: |
+            kill $(lsof -t -i:3000)
   CI_CD:
     name: CI/CD
     runs-on: [self-hosted, 'PinTalk runner']
+    needs: KILL
     steps:
       - name: Deploy
         run: |
@@ -15,5 +23,4 @@ jobs:
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
           npm run build   
-          kill $(lsof -t -i:3000)
           nohup npm run start & 
