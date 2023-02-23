@@ -5,26 +5,21 @@ on:
     branches: [develop]
 
 jobs:
-  KILL:
-      name: Kill
-      runs-on: [self-hosted, 'PinTalk runner']
-      steps:
-        - name: Kill
-          run: |
-            kill $(lsof -t -i:3000) || echo 'No previous process'
   CI_CD:
     name: CI/CD
     runs-on: [self-hosted, 'PinTalk runner']
-    needs: KILL
     steps:
       - name: Deploy
         run: |
           cd ~/PinTalk-Front
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
+          npm run build
+          kill $(lsof -t -i:3000) || echo 'No previous process'
+          nohup npm run start > nohup.out 2> nohup.err < /dev/null &
           # 기존에 실행 중인 서버가 있을 경우, 새로운 서버를 실행하지 않도록 하기 위해
           # `PORT` 환경 변수를 설정합니다.
-          PORT=3000 npm run build   
+          # PORT=3000 npm run build   
           # 기존에 실행 중인 서버가 종료될 때까지 대기합니다.
           # 종료되면, 새로운 서버를 실행합니다.
-          while [ "$(lsof -t -i:3000)" ]; do sleep 1; done && nohup npm run start & disown
+          # while [ "$(lsof -t -i:3000)" ]; do sleep 1; done && nohup npm run start & disown
