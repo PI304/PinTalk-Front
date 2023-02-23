@@ -1,0 +1,17 @@
+name: PinTalk
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  CI_CD:
+    name: CI/CD
+    runs-on: [self-hosted, PinTalk-runner]
+    steps:
+      - name: Deploy
+        run: |
+          cd ~/repository이름
+          git fetch --all && git reset --hard origin/develop && git pull origin develop
+          npm install
+          npm run build
