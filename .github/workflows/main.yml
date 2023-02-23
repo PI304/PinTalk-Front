@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Deploy
         run: |
+          fuser -k -n tcp 3000
           cd ~/PinTalk-Front
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
-          fuser -k -n tcp 3000
           npm run build
           nohup npm run start &
