@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Deploy
         run: |
-          fuser -k -n tcp 3000
           cd ~/PinTalk-Front
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
-          npm run build
+          npm run build    
+          kill -9 `netstat -tnlp|grep 3000|gawk '{ print $7 }'|grep -o '[0-9]*'`
           nohup npm run start &
