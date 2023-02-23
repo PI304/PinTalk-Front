@@ -16,4 +16,4 @@ jobs:
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
           npm run build    
-          nohup npm run start &
+          nohup npm run start & 
