@@ -3,7 +3,7 @@ import Link from 'next/link';
 export const SingUpFinPage = () => {
   return (
     <div className='flex flex-col items-center '>
-      <div className='text-text-1 flex flex-col items-center md:mt-[260px] mt-40 text-24 2xl:mt-28'>
+      <div className='text-text-1 flex flex-col items-center md:mt-[240px] mt-40 text-24 2xl:mt-28'>
         <div>축하합니다! 회원가입이 완료되었어요</div>
         <div>
           지금 바로 <span className='font-PretendardBold'>로그인</span>하러 가볼까요?

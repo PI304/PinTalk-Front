@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { LoginLayout } from '@/components/common/layouts';
+import { LoginLayout } from '@/components/common';
 import { SingUpFinPage } from '@/components/signUpFin';
 
 export default function signupfin() {

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { LoginLayout } from '@/components/common/layouts';
+import { LoginLayout } from '@/components/common';
 import { FindPWPage } from '../components/findPW/FindPWPage';
 
 export default function findpw() {

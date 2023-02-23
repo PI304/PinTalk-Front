@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { svgPinTalkEmo } from '@/styles/svg';
 import { ChildrenType } from '@/@types/base';
-import { svgDrawer } from '../../../styles/svg';
+import { svgDrawer } from '../../styles/svg';
 
 export const LoginLayout = ({ children }: ChildrenType) => {
   return (
