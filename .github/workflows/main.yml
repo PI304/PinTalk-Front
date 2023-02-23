@@ -15,5 +15,5 @@ jobs:
           git fetch --all && git reset --hard origin/develop && git pull origin develop
           npm install
           npm run build
-          
+          kill -9 `lsof -t -i TCP:3000`
           nohup npm run start &
