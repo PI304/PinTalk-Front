@@ -62,6 +62,7 @@ module.exports = {
         80: '5rem',
       },
       colors: {
+        border: '#DDDDDD',
         blue: {
           main: '#2F80ED',
           sub: '#D0DFFB',
