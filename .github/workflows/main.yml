@@ -1,25 +1,21 @@
-name: develop
+name: Node.js 서버 자동 배포
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
 
 jobs:
-  CI_CD:
-    name: CI/CD
-    runs-on: [self-hosted, 'PinTalk runner']
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Deploy
-        run: |
-          cd ~/PinTalk-Front
-          git fetch --all && git reset --hard origin/develop && git pull origin develop
-          npm install
-          npm run build
-          kill $(lsof -t -i:3000) || echo 'No previous process'
-          screen -dmS server npm run start
-          # 기존에 실행 중인 서버가 있을 경우, 새로운 서버를 실행하지 않도록 하기 위해
-          # `PORT` 환경 변수를 설정합니다.
-          # PORT=3000 npm run build   
-          # 기존에 실행 중인 서버가 종료될 때까지 대기합니다.
-          # 종료되면, 새로운 서버를 실행합니다.
-          # while [ "$(lsof -t -i:3000)" ]; do sleep 1; done && nohup npm run start & disown
+      - name: 코드 가져오기
+        uses: actions/checkout@v2
+      - name: Node.js 설치
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: 패키지 설치
+        run: npm install
+      - name: 서버 실행
+        run: npm start
