@@ -4,15 +4,15 @@ import { svgCheckIcon2 } from '../../styles/svg';
 export const SingUpFinPage = () => {
   return (
     <div className='flex flex-col items-center '>
-      <div className='flex justify-center items-center mt-[221px]'>
+      <div className='flex justify-center items-center md:mt-[181px] mt-[221px]'>
         <div className='border-2 border-blue-main rounded-full w-[34px] h-[34px] flex justify-center items-center bg-blue-main'>
           {svgCheckIcon2}
         </div>
-        <div className='border-t-2 border-blue-main w-[98px] mx-2'></div>
+        <div className='border-t-2 border-blue-main md:w-[64px] w-[98px] mx-2'></div>
         <div className='border-2 border-blue-main rounded-full w-[34px] h-[34px] flex justify-center items-center bg-blue-main'>
           {svgCheckIcon2}
         </div>
-        <div className='border-t-2 border-blue-main w-[98px] mx-2'></div>
+        <div className='border-t-2 border-blue-main md:w-[64px] w-[98px] mx-2'></div>
         <div className='border-2 border-blue-main rounded-full w-[34px] h-[34px] flex justify-center items-center bg-blue-main'>
           {svgCheckIcon2}
         </div>
@@ -22,7 +22,7 @@ export const SingUpFinPage = () => {
         <div>비밀번호 설정</div>
         <div>서비스 입력</div>
       </div>
-      <div className='text-text-1 text-center md:mt-[240px] mt-16 text-24 2xl:mt-28 font-PretendardSemibold'>
+      <div className='text-text-1 text-center md:mt-[60px] mt-16 text-24 2xl:mt-28 font-PretendardSemibold'>
         축하합니다! 회원가입이 완료되었어요
         <br />
         지금 바로 핀톡을 시작해보세요
