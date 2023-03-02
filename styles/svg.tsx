@@ -35,6 +35,14 @@ export const svgCheckIcon = (
     </defs>
   </svg>
 );
+export const svgCheckIcon2 = (
+  <svg width='16' height='11' viewBox='0 0 16 11' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <path
+      d='M6.6002 10.1996C6.3002 10.1996 6.0002 10.0996 5.8002 9.79961L1.2002 5.19961C0.700195 4.69961 0.700195 3.99961 1.2002 3.49961C1.7002 2.99961 2.4002 2.99961 2.9002 3.49961L6.6002 7.19961L13.2002 0.599609C13.7002 0.0996094 14.4002 0.0996094 14.9002 0.599609C15.4002 1.09961 15.4002 1.79961 14.9002 2.29961L7.5002 9.69961C7.2002 10.0996 6.9002 10.1996 6.6002 10.1996Z'
+      fill='white'
+    />
+  </svg>
+);
 
 export const svgDrawer = (
   <svg width='20' height='18' viewBox='0 0 20 18' fill='none' xmlns='http://www.w3.org/2000/svg'>

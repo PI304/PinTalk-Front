@@ -5,17 +5,15 @@ import { svgDrawer } from '../../styles/svg';
 
 export const LoginLayout = ({ children }: ChildrenType) => {
   return (
-    <div className='h-screen'>
-      <nav className='flex items-center justify-between flex-wrap 2xl:mx-32 mx-44 2xl:h-[70px] h-[88px] md:mx-6'>
-        <div className='flex items-start md-min:hidden'>{svgDrawer}</div>
+    <div className='min-h-screen bg-gradient-to-b from-gradi-1 to-gradi-2'>
+      <nav className='flex items-center md:justify-center justify-between flex-wrap 2xl:mx-32 mx-44 2xl:h-[70px] h-[88px] md:mx-6'>
         <div>
           <Link href='/main'>
-            <div className='font-Montserrat font-bold text-blue-main md:text-28 text-20 bg-white flex items-center'>
+            <div className='font-Montserrat font-bold text-blue-main md:text-28 text-20  flex items-center'>
               PinTalk<div className=''>{svgPinTalkEmo}</div>
             </div>
           </Link>
         </div>
-        <div></div>
         <div className='font-PretendardSemibold text-base md:hidden'>
           <span className='text-blue-main text-16 mx-6'>
             <button>로그인</button>
@@ -25,9 +23,7 @@ export const LoginLayout = ({ children }: ChildrenType) => {
           </span>
         </div>
       </nav>
-      <div className='bg-gradient-radial at-27.45% 52.08% from-gradi-1 to-gradi-2 h-screen'>
-        {children}
-      </div>
+      <div>{children}</div>
     </div>
   );
 };
