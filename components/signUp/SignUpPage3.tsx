@@ -30,9 +30,9 @@ export const SignUpPage3 = () => {
             <div className='text-blue-main text-16 font-PretendardSemibold'>3</div>
           </div>
         </div>
-        <div className='text-text-6 text-14 flex justify-between md:px-[34px] px-[138px] mt-2 font-PretendardMedium'>
-          <div className='text-text-2'>이메일 인증</div>
-          <div className='text-text-2'>비밀번호 설정</div>
+        <div className='text-text-2 text-14 flex justify-between md:px-[34px] px-[138px] mt-2 font-PretendardMedium'>
+          <div>이메일 인증</div>
+          <div>비밀번호 설정</div>
           <div>서비스 입력</div>
         </div>
         <div className='box-border bg-white md:w-[362px] w-[636px] md:h-[445px] h-[483px] shadow-custom rounded-[10px] flex flex-col justify-center items-center mt-10'>
