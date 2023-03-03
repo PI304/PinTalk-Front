@@ -1,6 +1,6 @@
 import { LoginLayout } from '@/components/common';
-import { MainPage } from '@/components/main';
 import { ReactElement } from 'react';
+import { MainPage } from '@/components/main';
 
 export default function main() {
   return (
