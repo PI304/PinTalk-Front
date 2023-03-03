@@ -27,7 +27,7 @@ export const SingUpFinPage = () => {
         <br />
         지금 바로 핀톡을 시작해보세요
       </div>
-      <Link href='/main'>
+      <Link href='/login'>
         <button className='rounded-full py-3 px-5 text-white text-16 bg-gradient-to-r from-blue-main to-gradi-3 md:mt-12 mt-12 mb-32 2xl:mb-28'>
           로그인 하러 가기
         </button>

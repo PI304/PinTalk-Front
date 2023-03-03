@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
-import { AdminMainPage } from '../components/adminMain/AdminMainPage';
+import { AdminChatPage } from '../components/adminChat/AdminChatPage';
 import { AdminLayout } from '../components/common/AdminLayout';
 
 export default function main() {
   return (
     <>
-      <AdminMainPage />
+      <AdminChatPage />
     </>
   );
 }
