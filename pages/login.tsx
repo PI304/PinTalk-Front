@@ -1,11 +1,11 @@
 import { LoginLayout } from '@/components/common';
+import { LoginPage } from '@/components/Login';
 import { ReactElement } from 'react';
-import { MainPage } from '@/components/main';
 
 export default function main() {
   return (
     <>
-      <MainPage />
+      <LoginPage />
     </>
   );
 }

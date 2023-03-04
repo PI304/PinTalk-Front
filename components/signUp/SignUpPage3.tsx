@@ -10,7 +10,7 @@ export const SignUpPage3 = () => {
   return (
     <div className='flex justify-center items-center '>
       <div className=''>
-        <div className='text-center mt-20'>
+        <div className='text-center md:mt-10 mt-20'>
           <div className='font-Montserrat font-bold text-blue-main text-38'>SIGN UP</div>
           <div className='text-text-3 mt-3'>
             핀톡에서 이용하고자 하는 서비스의 정보를 입력해 주세요
@@ -21,23 +21,23 @@ export const SignUpPage3 = () => {
           <div className='border-2 border-blue-main rounded-full w-[34px] h-[34px] flex justify-center items-center bg-blue-main'>
             {svgCheckIcon2}
           </div>
-          <div className='border-t-2 border-blue-main w-[98px] mx-2'></div>
+          <div className='border-t-2 border-blue-main md:w-[64px] w-[98px] mx-2'></div>
           <div className='border-2 border-blue-main rounded-full w-[34px] h-[34px] flex justify-center items-center bg-blue-main'>
             {svgCheckIcon2}
           </div>
-          <div className='border-t-2 border-blue-main w-[98px] mx-2'></div>
+          <div className='border-t-2 border-blue-main md:w-[64px] w-[98px] mx-2'></div>
           <div className='border-2 border-blue-main rounded-full w-[34px] h-[34px] flex justify-center items-center bg-white'>
             <div className='text-blue-main text-16 font-PretendardSemibold'>3</div>
           </div>
         </div>
-        <div className='text-text-6 text-14 flex justify-between px-[138px] mt-2 font-PretendardMedium'>
-          <div className='text-text-2'>이메일 인증</div>
-          <div className='text-text-2'>비밀번호 설정</div>
+        <div className='text-text-2 text-14 flex justify-between md:px-[34px] px-[138px] mt-2 font-PretendardMedium'>
+          <div>이메일 인증</div>
+          <div>비밀번호 설정</div>
           <div>서비스 입력</div>
         </div>
-        <div className='box-border bg-white w-[636px] h-[483px] shadow-custom rounded-[10px] flex flex-col justify-center items-center mt-10'>
+        <div className='box-border bg-white md:w-[362px] w-[636px] md:h-[445px] h-[483px] shadow-custom rounded-[10px] flex flex-col justify-center items-center mt-10'>
           <div className='flex'>
-            <div className=' text-text-5'>
+            <div className='md:mt-2 text-text-5'>
               <div>
                 <div className='mb-1 text-text-1 font-PretendardMedium'>서비스 이름</div>
                 <div>
@@ -47,7 +47,7 @@ export const SignUpPage3 = () => {
                     value={serviceName}
                     onChange={onChangeServiceName}
                     placeholder='서비스 이름을 입력해주세요'
-                    className='w-[392px] h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
+                    className='md:w-[320px] w-[392px] h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
                   />
                 </div>
               </div>
@@ -60,7 +60,7 @@ export const SignUpPage3 = () => {
                     value={domain}
                     onChange={onChangeDomain}
                     placeholder='서비스 도메인 주소를 입력해주세요'
-                    className='w-[392px] h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
+                    className='md:w-[320px] w-[392px] h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
                   />
                 </div>
               </div>
@@ -72,7 +72,7 @@ export const SignUpPage3 = () => {
                     value={description}
                     onChange={onChangeDescription}
                     placeholder='서비스를 소개할 수 있는 설명을 입력해주세요'
-                    className='w-[392px] h-[102px] px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14 overflow-auto'
+                    className='md:w-[320px] w-[392px] h-[102px] px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14 overflow-auto'
                   />
                 </div>
               </div>

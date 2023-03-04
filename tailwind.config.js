@@ -65,6 +65,7 @@ module.exports = {
         border: '#DDDDDD',
         blue: {
           main: '#2F80ED',
+          deep: '#1E71E1',
           sub: '#D0DFFB',
           sub2: '#EDF1F8',
         },
@@ -122,7 +123,8 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     boxShadow: {
-      custom: '0 0px 8px 15px rgba(186, 186, 186, 0.1)',
+      custom: '0 0px 8px 15px rgba(231, 236, 242, 0.5)',
+      custom2: '0px 4px 30px rgba(193, 200, 214, 0.5)',
     },
   },
   plugins: [],
