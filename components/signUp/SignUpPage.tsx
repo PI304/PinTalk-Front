@@ -1,9 +1,13 @@
 import useInput from '../../hooks/useInput';
+import useGlobalInput from '@/hooks/useGlobalInput';
 import Link from 'next/link';
+import { useAppSelector } from '@/features/hooks';
 
 export const SignUpPage = () => {
-  const { value: email, onChange: onChangeEmail } = useInput();
+  const { value: email, onChange: onChangeEmail } = useGlobalInput('', 'email');
   const { value: code, onChange: onChangeCode } = useInput();
+  const userState = useAppSelector((state) => state.user);
+  console.log(userState);
 
   return (
     <div className='flex justify-center items-center '>
