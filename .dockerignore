@@ -1,0 +1,4 @@
+node_modules 
+# node_modules 폴더의 내용이 이미지로 복사되지 않도록함
+Dockerfile
+.git
