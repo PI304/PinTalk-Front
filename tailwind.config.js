@@ -128,6 +128,7 @@ module.exports = {
     boxShadow: {
       custom: '0 0px 8px 15px rgba(231, 236, 242, 0.5)',
       custom2: '0px 4px 30px rgba(193, 200, 214, 0.5)',
+      admin: '0px 3px 15px rgba(122, 145, 172, 0.25)',
     },
   },
   plugins: [],
