@@ -1,6 +1,5 @@
 import useInput from '../../hooks/useInput';
 import useGlobalInput from '@hooks/useGlobalInput';
-import Link from 'next/link';
 import SignUpForm from './SignUpForm';
 import { useAppSelector } from '@features/hooks';
 

@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface userState {
-  name: string;
+  email: string;
   password: string;
-  [key: string]: any;
+
+  // [key: string]: any;
 }
 const initialState: userState = {
-  name: '',
+  email: '',
   password: '',
 };
 
@@ -14,14 +15,15 @@ const userSlice = createSlice({
   name: 'userReducer',
   initialState,
   reducers: {
-    setName: (state, action) => ({
+    setEmail: (state, action) => ({
       ...state,
-      name: action.payload,
+      email: action.payload,
     }),
     setPassword: (state, action) => ({
       ...state,
       password: action.payload,
     }),
+
     setValues: (state, action) => ({
       ...state,
       ...action.payload,
@@ -29,5 +31,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setName, setPassword, setValues } = userSlice.actions;
+export const { setEmail, setPassword, setValues } = userSlice.actions;
 export default userSlice.reducer;

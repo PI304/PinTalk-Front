@@ -1,11 +1,22 @@
 import useInput from '../../hooks/useInput';
 import Link from 'next/link';
 import { svgCheckIcon2 } from '../../styles/svg';
+import authApi from '@apis/auth/authApi';
+import { useAppSelector } from '@features/hooks';
 
 const SignUpPage3 = () => {
-  const { value: serviceName, onChange: onChangeServiceName } = useInput();
-  const { value: domain, onChange: onChangeDomain } = useInput();
-  const { value: description, onChange: onChangeDescription } = useInput();
+  const { value: service_name, onChange: onChangeService_name } = useInput();
+  const { value: service_domain, onChange: onChangeService_domain } = useInput();
+  const { value: service_expl, onChange: onChangeService_expl } = useInput();
+  const email = useAppSelector((state: any) => state.user.email);
+  const password = useAppSelector((state: any) => state.user.password);
+
+  const valid = (value: string) =>
+    value === '' ? 'border-gray-300' : 'border-blue-main bg-blue-sub2';
+
+  const onButtonClick = () => {
+    authApi.postSignUp({ email, service_name, service_expl, service_domain, password });
+  };
 
   return (
     <div className='flex justify-center items-center '>
@@ -13,7 +24,7 @@ const SignUpPage3 = () => {
         <div className='text-center md:mt-10 mt-20'>
           <div className='font-Montserrat font-bold text-blue-main text-38'>SIGN UP</div>
           <div className='text-text-3 mt-3'>
-            핀톡에서 이용하고자 하는 서비스의 정보를 입력해 주세요
+            핀톡을 이용하고자 하는 서비스의 정보를 입력해 주세요
             <br /> 입력한 정보는 언제든 수정이 가능해요
           </div>
         </div>
@@ -43,24 +54,28 @@ const SignUpPage3 = () => {
                 <div>
                   <input
                     type='text'
-                    id='ServiceName'
-                    value={serviceName}
-                    onChange={onChangeServiceName}
+                    id='Service_name'
+                    value={service_name}
+                    onChange={onChangeService_name}
                     placeholder='서비스 이름을 입력해주세요'
-                    className='md:w-[320px] w-[392px] h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
+                    className={`md:w-[320px] w-[392px] h-12 px-4 py-2 border border-solid ${valid(
+                      service_name,
+                    )} rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
                   />
                 </div>
               </div>
               <div>
-                <div className='mb-1 text-text-1 font-PretendardMedium'>도메인</div>
+                <div className='mb-1 text-text-1 font-PretendardMedium'>서비스 도메인</div>
                 <div>
                   <input
                     type='text'
-                    id='Domain'
-                    value={domain}
-                    onChange={onChangeDomain}
+                    id='service_Domain'
+                    value={service_domain}
+                    onChange={onChangeService_domain}
                     placeholder='서비스 도메인 주소를 입력해주세요'
-                    className='md:w-[320px] w-[392px] h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
+                    className={`md:w-[320px] w-[392px] h-12 px-4 py-2 border border-solid ${valid(
+                      service_domain,
+                    )}  rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
                   />
                 </div>
               </div>
@@ -68,22 +83,25 @@ const SignUpPage3 = () => {
                 <div className='mb-1 text-text-1 font-PretendardMedium'>서비스 설명</div>
                 <div>
                   <textarea
-                    id='description'
-                    value={description}
-                    onChange={onChangeDescription}
+                    id='service_expl'
+                    value={service_expl}
+                    onChange={onChangeService_expl}
                     placeholder='서비스를 소개할 수 있는 설명을 입력해주세요'
-                    className='md:w-[320px] w-[392px] h-[102px] px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14 overflow-auto'
+                    className={`md:w-[320px] w-[392px] h-[102px] px-4 py-2 border border-solid  ${valid(
+                      service_expl,
+                    )}  rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14 overflow-auto`}
                   />
                 </div>
               </div>
               <div>
-                {serviceName === '' || domain === '' || description === '' ? (
+                {service_name === '' || service_domain === '' || service_expl === '' ? (
                   <div className='p-2 w-full h-[44px] bg-blue-sub rounded-full text-white flex justify-center items-center'>
                     회원가입
                   </div>
                 ) : (
                   <Link href='./signupfin'>
                     <button
+                      onClick={onButtonClick}
                       type='button'
                       className='p-2 w-full h-[44px] bg-gradient-to-r from-blue-main to-gradi-3 rounded-full text-white'>
                       회원가입
