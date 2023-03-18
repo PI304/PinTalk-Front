@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { LogoutLayout } from '@components/common';
-import { SignUpPage2 } from '@components/signUp';
+import { SignUpPage2 } from '@components/signUp2';
 
 export default function signup() {
   return (
