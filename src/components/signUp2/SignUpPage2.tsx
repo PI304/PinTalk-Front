@@ -177,7 +177,10 @@ const SignUpPage2 = () => {
             </div>
           </div>
           <div className='md:mt-2 mt-6 flex justify-end md:w-[300px] w-[580px]'>
-            {passWord === '' || passWordCheck === '' || passWord !== passWordCheck ? (
+            {passWord === '' ||
+            passWordCheck === '' ||
+            passWord !== passWordCheck ||
+            !passwordValid ? (
               <div className='p-2 md:w-[75px] w-[94px] h-[44px] bg-blue-sub rounded-full text-white flex justify-center items-center'>
                 다음
               </div>
