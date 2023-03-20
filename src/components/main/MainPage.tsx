@@ -55,10 +55,12 @@ const MainPage = () => {
               <br />
               실시간으로 채팅을 주고받아보세요
             </div>
-            <div className='bg-BG-1 font-PretendardMedium text-text-3 text-19 w-[159px] h-[53px] rounded-3xl flex justify-center items-center mt-8'>
-              <div className='mr-2'>더 알아보기</div>
-              <div>{svgArrowBlack}</div>
-            </div>
+            <Link href='/description'>
+              <div className='bg-BG-1 font-PretendardMedium text-text-3 text-19 w-[159px] h-[53px] rounded-3xl flex justify-center items-center mt-8'>
+                <div className='mr-2'>더 알아보기</div>
+                <div>{svgArrowBlack}</div>
+              </div>
+            </Link>
           </div>
         </div>
         <div className='flex'>
