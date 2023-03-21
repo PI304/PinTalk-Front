@@ -1,6 +1,6 @@
-const Slogan = () => {
+const Slogan2 = () => {
   return (
-    <div className='md:hidden flex justify-end  2xl:mt-40 mt-48 font-Montserrat w-[1060px] 2xl:w-[850px]'>
+    <div className='lg:hidden flex justify-end  2xl:mt-40 mt-48 font-Montserrat w-[1060px] 2xl:w-[850px]'>
       <div className='gird grid-rows-2 2xl:w-[870px] w-[900px] '>
         <div className='ml-20'>
           <div className='flex items-center xl:text-60 2xl:text-70 text-80 text-blue-main font-bold'>
@@ -23,4 +23,4 @@ const Slogan = () => {
   );
 };
 
-export default Slogan;
+export default Slogan2;
