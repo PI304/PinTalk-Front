@@ -73,6 +73,8 @@ module.exports = {
         BG: {
           1: '#F8F8F8',
           2: '#F3F5FA',
+          3: '#64799E',
+          navy: '#1C253A',
         },
         gradi: {
           1: '#F4F8FB',
