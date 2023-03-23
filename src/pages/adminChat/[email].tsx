@@ -8,7 +8,7 @@ export default function main() {
   const { email } = router.query;
   return (
     <>
-      <AdminChatPage userEmail={email} />
+      <AdminChatPage adminEmail={email} />
     </>
   );
 }
