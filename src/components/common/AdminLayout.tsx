@@ -28,18 +28,18 @@ const AdminLayout = ({ children }: ChildrenType) => {
   return (
     <div className='min-h-screen'>
       <div className='flex min-h-screen'>
-        <div className='bg-blue-main w-[180px] flex flex-col justify-between '>
+        <div className='bg-blue-main min-w-[180px] flex flex-col justify-between '>
           <div>
             <div className='font-Montserrat font-semibold  text-white text-21 mt-8 ml-7 flex '>
               PinTalk<div className=''>{svgPinTalkEmo2}</div>
             </div>
-            <div className='text-white mt-30 flex flex-col mt-10 text-16 w-full'>
+            <div className=' mt-30 flex flex-col mt-10 text-16 w-full'>
               <div>
                 <Link href={`/adminChat/${encodeURIComponent(email)}`}>
                   <div
                     className={`flex items-center py-3 pl-7 ${isChatActive ? 'bg-blue-deep' : ''}`}>
                     <div className='mr-3'>{isChatActive ? svgMessageOn : svgMessageOff}</div>
-                    <div>대화창</div>
+                    <div className={`${isChatActive ? 'text-white' : 'text-blue-sub'}`}>대화창</div>
                   </div>
                 </Link>
                 <Link href={`/adminProfile/${encodeURIComponent(email)}`}>
@@ -47,13 +47,15 @@ const AdminLayout = ({ children }: ChildrenType) => {
                     className={`flex items-center py-3 pl-7 ${
                       isProfileActive ? 'bg-blue-deep' : ''
                     }`}>
-                    <div className='mr-3'>{isProfileActive ? svgPersonOn : svgPersonOff}</div>내
-                    정보
+                    <div className='mr-3'>{isProfileActive ? svgPersonOn : svgPersonOff}</div>
+                    <div className={`${isProfileActive ? 'text-white' : 'text-blue-sub'}`}>
+                      내 정보
+                    </div>
                   </div>
                 </Link>
                 <div className='flex items-center py-3 pl-7'>
                   <div className='mr-3'>{svgSetting}</div>
-                  <div>환경설정</div>
+                  <div className='text-blue-sub'>환경설정</div>
                 </div>
               </div>
             </div>
@@ -65,7 +67,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
             <div>로그아웃</div>
           </Link>
         </div>
-        <div className='bg-BG-2 w-[calc(100%-180px)]'>
+        <div className='bg-BG-2 w-[calc(100%-180px)] min-w-[600px]'>
           <div>{children}</div>
         </div>
       </div>
