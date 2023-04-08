@@ -2,7 +2,11 @@ import useInput from '../../hooks/useInput';
 import Link from 'next/link';
 import { svgCheckIcon2 } from '../../styles/svg';
 import authApi from '@apis/auth/authApi';
-import { useAppSelector } from '@features/hooks';
+import { useAppSelector, useAppDispatch } from '@features/hooks';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { setData } from '@features/user/userSlice';
+import deleteCookie from '../../hooks/useDeleteCookie';
 
 const SignUpPage3 = () => {
   const { value: service_name, onChange: onChangeService_name } = useInput();
@@ -11,13 +15,67 @@ const SignUpPage3 = () => {
   const email = useAppSelector((state: any) => state.user.email);
   const password = useAppSelector((state: any) => state.user.password);
 
+  const dispatch = useAppDispatch();
+
   const valid = (value: string) =>
     value === '' ? 'border-gray-300' : 'border-blue-main bg-blue-sub2';
 
-  const onButtonClick = () => {
-    authApi.postSignUp({ email, service_name, service_expl, service_domain, password });
+  const onButtonClick = async () => {
+    const userData = await authApi.postSignUp({
+      email,
+      service_name,
+      service_expl,
+      service_domain,
+      password,
+    });
+    dispatch(setData(userData));
   };
+  const router = useRouter();
 
+  useEffect(() => {
+    const handleRouteChangeStart = (url: string) => {
+      localStorage.setItem('previousURL', '');
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+    };
+  }, [router]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const previousURL = localStorage.getItem('previousURL');
+      const currentURL = window.location.href;
+      console.log('prev');
+      console.log(previousURL);
+      console.log('cur');
+      console.log(currentURL);
+
+      if (previousURL === currentURL) {
+        router.replace('/signup');
+        localStorage.setItem('previousURL', '');
+      } else {
+        localStorage.setItem('previousURL', currentURL);
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
+    const onBeforeUnload = () => {
+      // 여기에 쿠키 이름을 대체하세요.
+      const cookieName = 'email_verification_code';
+      deleteCookie(cookieName);
+    };
+
+    window.addEventListener('beforeunload', onBeforeUnload);
+
+    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, []);
   return (
     <div className='flex justify-center items-center '>
       <div className=''>

@@ -1,14 +1,25 @@
-import useInput from '../../hooks/useInput';
-import useGlobalInput from '@hooks/useGlobalInput';
 import SignUpForm from './SignUpForm';
 import { useAppSelector } from '@features/hooks';
+import { useEffect } from 'react';
+import deleteCookie from '../../hooks/useDeleteCookie';
 
 const SignUpPage = () => {
-  const { value: email, onChange: onChangeEmail } = useGlobalInput('', 'email');
-  const { value: code, onChange: onChangeCode } = useInput();
   const userState = useAppSelector((state: any) => state.user);
   console.log(userState);
+  useEffect(() => {
+    const onBeforeUnload = () => {
+      // 여기에 쿠키 이름을 대체하세요.
+      const cookieName = 'email_verification_code';
+      deleteCookie(cookieName);
+    };
 
+    window.addEventListener('beforeunload', onBeforeUnload);
+
+    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, []);
   return (
     <div className='flex justify-center items-center '>
       <div className=''>

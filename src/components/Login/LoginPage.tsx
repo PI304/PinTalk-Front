@@ -49,7 +49,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='flex lg:justify-center xl-min:justify-center xl:pl-10'>
+    <div className='flex lg:justify-center xl-min:justify-center md:pl-0 xl:pl-14'>
       <Slogan2 />
       <div className='md-min:w-[calc(100%-1060px)] flex justify-center xl:mt-10'>
         <div className='xl-min:grid grid-rows-6'>

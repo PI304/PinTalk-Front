@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useState, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '@features/hooks';
-import { setEmail } from '@features/user/userSlice';
+import { useAppDispatch } from '@features/hooks';
+import { setEmail, setCodeValid } from '@features/user/userSlice';
 import { svgCheckIcon3, svgWarning } from '@styles/svg';
 import authApi from '@apis/auth/authApi';
 
@@ -13,12 +13,15 @@ const EmailForm = () => {
   const [checkEmail, setCheckEmail] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [isEmailSent, setIsEmailSent] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit } = useForm<EmailFormData>({
+  const { register, handleSubmit, watch } = useForm<EmailFormData>({
     mode: 'onBlur',
   });
+
+  const email = watch('email');
 
   const isValidEmail = (email: string): boolean => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -29,6 +32,9 @@ const EmailForm = () => {
 
   const handleEmailChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
+    if (value !== email) {
+      dispatch(setCodeValid(false));
+    }
 
     // 이전에 설정된 타이머가 있다면 취소합니다.
     if (timerId.current) {
@@ -49,20 +55,22 @@ const EmailForm = () => {
         setCheckEmail(false);
       }
       if (value === '') {
-        // trim() 함수로 문자열 앞뒤 공백을 제거하고, 빈 문자열인지 확인합니다.
         setIsEmpty(true);
       } else {
         setIsEmpty(false);
       }
-    }, 1000); // 0.5초 동안 value가 변하지 않으면 요청합니다.
+    }, 1000);
   };
 
   const onSubmit = async (data: EmailFormData) => {
+    dispatch(setCodeValid(false));
     try {
       const email = await authApi.postSendCode({ email: data.email });
-      dispatch(setEmail(email));
+      setIsEmailSent(true);
+      dispatch(setEmail(data.email));
     } catch (e) {
       setEmailValid(false);
+      setIsEmailSent(false);
     }
   };
 
@@ -75,9 +83,14 @@ const EmailForm = () => {
             <div className='mr-1'>유효하지 않은 이메일이에요</div>
           </div>
         )}
-        {emailValid && checkEmail && (
+        {emailValid && checkEmail && !isEmailSent && (
           <div className='text-blue-main text-11 flex items-center'>
             <div className='mr-1'>사용 가능한 이메일이에요</div>
+          </div>
+        )}
+        {emailValid && checkEmail && isEmailSent && (
+          <div className='text-blue-main text-11 flex items-center'>
+            <div className='mr-1'>이메일이 전송되었어요</div>
           </div>
         )}
         {emailValid && !checkEmail && !isEmpty && (

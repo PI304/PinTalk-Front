@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import useInput from '../../hooks/useInput';
 import Link from 'next/link';
-import { svgCheckIcon2, svgCheckIcon3, svgWarning } from '../../styles/svg';
+import { svgCheckIcon2, svgCheckIcon3, svgWarning } from '@styles/svg';
 import { useAppDispatch } from '../../features/hooks';
 import { setPassword } from '@features/user/userSlice';
+import { useAppSelector } from '@features/hooks';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import deleteCookie from '../../hooks/useDeleteCookie';
 
 const SignUpPage2 = () => {
+  const userState = useAppSelector((state: any) => state.user);
+  console.log(userState);
   const [passwordValid, setPasswordValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -47,6 +53,52 @@ const SignUpPage2 = () => {
     dispatch(setPassword(passWordCheck));
   };
 
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChangeStart = (url: string) => {
+      localStorage.setItem('previousURL', '');
+    };
+
+    router.events.on('routeChangeStart', handleRouteChangeStart);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
+    };
+  }, [router]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const previousURL = localStorage.getItem('previousURL');
+      const currentURL = window.location.href;
+      console.log('prev');
+      console.log(previousURL);
+      console.log('cur');
+      console.log(currentURL);
+
+      if (previousURL === currentURL) {
+        router.replace('/signup');
+        localStorage.setItem('previousURL', '');
+      } else {
+        localStorage.setItem('previousURL', currentURL);
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
+    const onBeforeUnload = () => {
+      // 여기에 쿠키 이름을 대체하세요.
+      const cookieName = 'email_verification_code';
+      deleteCookie(cookieName);
+    };
+
+    window.addEventListener('beforeunload', onBeforeUnload);
+
+    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, []);
   return (
     <div className='flex justify-center items-center '>
       <div className=''>
@@ -76,7 +128,7 @@ const SignUpPage2 = () => {
         </div>
         <div className='box-border bg-white md:w-[362px] w-[636px] md:h-[303px] h-[344px] shadow-custom rounded-[10px] flex flex-col justify-center items-center mt-10'>
           <div className='flex'>
-            <div className='md:mt-4 mt-10 text-text-5'>
+            <div className='md:mt-4 text-text-5'>
               <div>
                 <div className='flex items-center mb-1'>
                   <div className=' text-text-1 font-PretendardMedium  mr-2'>비밀번호</div>
