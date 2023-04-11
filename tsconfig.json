@@ -26,7 +26,8 @@
       "@styles/*": ["./styles/*"],
       "@public/*": ["./public/*"],
       "@config": ["../config.ts"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@seo/*": ["./seo/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
