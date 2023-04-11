@@ -7,7 +7,6 @@ import { setPassword } from '@features/user/userSlice';
 import { useAppSelector } from '@features/hooks';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import deleteCookie from '../../hooks/useDeleteCookie';
 
 const SignUpPage2 = () => {
   const userState = useAppSelector((state: any) => state.user);
@@ -42,7 +41,6 @@ const SignUpPage2 = () => {
       setPasswordValid(false);
     }
     if (value === '') {
-      // trim() 함수로 문자열 앞뒤 공백을 제거하고, 빈 문자열인지 확인합니다.
       setIsEmpty(true);
     } else {
       setIsEmpty(false);
@@ -85,20 +83,6 @@ const SignUpPage2 = () => {
     }
   }, [router]);
 
-  useEffect(() => {
-    const onBeforeUnload = () => {
-      // 여기에 쿠키 이름을 대체하세요.
-      const cookieName = 'email_verification_code';
-      deleteCookie(cookieName);
-    };
-
-    window.addEventListener('beforeunload', onBeforeUnload);
-
-    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload);
-    };
-  }, []);
   return (
     <div className='flex justify-center items-center '>
       <div className=''>
