@@ -1,10 +1,13 @@
 import { LogoutLayout } from '@components/common';
 import { LoginPage } from '@components/Login';
+import Seo from '@constants/seo';
+import CustomHead from '@seo/CustomHead';
 import { ReactElement } from 'react';
 
 export default function main() {
   return (
     <>
+      <CustomHead title={Seo.Title.login} />
       <LoginPage />
     </>
   );
