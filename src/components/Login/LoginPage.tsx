@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { svgCheckIcon } from '@styles/svg';
+import { svgCheckedIcon, svgUnCeckedIcon } from '@styles/svg';
 import Slogan2 from '@components/common/Slogan2';
 import { useRouter } from 'next/router';
 import { AuthLogin } from '@apis/auth/authApi.type';
@@ -18,6 +18,7 @@ const LoginPage = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors, isValid },
   } = useForm<{ email: string; password: string }>({
     mode: 'onChange',
@@ -25,7 +26,14 @@ const LoginPage = () => {
 
   const handleEmailSave = () => {
     setSaveEmail(!saveEmail);
+    const email = getValues('email');
+    if (!saveEmail) {
+      localStorage.setItem('email', email);
+    } else {
+      localStorage.removeItem('email');
+    }
   };
+
   useEffect(() => {
     const savedEmail = localStorage.getItem('email');
     if (savedEmail) {
@@ -51,7 +59,7 @@ const LoginPage = () => {
   return (
     <div className='flex lg:justify-center xl-min:justify-center md:pl-0 xl:pl-14'>
       <Slogan2 />
-      <div className='md-min:w-[calc(100%-1060px)] flex justify-center xl:mt-10'>
+      <div className='md-min:w-[calc(100%-950px)] 2xl-min:w-[calc(100%-1060px)] flex justify-center xl:mt-10'>
         <div className='xl-min:grid grid-rows-6'>
           <div className='row-span-1'></div>
           <div className='flex flex-col text-text-1 row-span-5'>
@@ -59,7 +67,7 @@ const LoginPage = () => {
               핀톡을 통해 어디서든 간편하고 쉽게
               <div className='mt-3 xl:mb-6 2xl:mb-10 mb-14'>나만의 대화창을 생성해보세요</div>
             </div>
-            <div className='lg:flex lg:mt-28'>
+            <div className='lg:flex lg:mt-20'>
               <div>
                 <div className='font-Montserrat font-bold text-blue-main 2xl:text-30 text-38'>
                   LOGIN
@@ -97,7 +105,7 @@ const LoginPage = () => {
                   <div
                     className='flex font-PretendardMedium cursor-pointer'
                     onClick={handleEmailSave}>
-                    {saveEmail ? svgCheckIcon : null}&nbsp; 이메일 저장
+                    {saveEmail ? svgCheckedIcon : svgUnCeckedIcon}&nbsp; 이메일 저장
                   </div>
                   <div>
                     <Link href='/findpw'>비밀번호 찾기</Link> &nbsp;|&nbsp;{' '}
