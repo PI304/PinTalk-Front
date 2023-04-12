@@ -1,7 +1,13 @@
 const Seo = {
   Title: {
     main: 'Main',
-    notFound: 'Not Found',
+    signup: 'SignUp',
+    login: 'Login',
+    findPW: 'FindPW',
+    chat: 'Chat',
+    profile: 'Profile',
+    description: 'Description',
+    notFound: '404',
   },
 } as const;
 

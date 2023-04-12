@@ -15,7 +15,7 @@ const AdminProfilePage = ({ adminEmail }: AdminEmail) => {
           수정하기
         </button>
       </div>
-      <div className='w-10/12 h-[35%] bg-white rounded-lg shadow-admin mb-8 flex items-center justify-center  min-h-[200px]'>
+      <div className='w-10/12 h-[35%] bg-white rounded-lg shadow-admin mb-8 flex items-center justify-center  xl-min:min-h-[300px]'>
         <div className='w-10/12 h-4/5 flex'>
           <div className='w-3/12 flex flex-col justify-center items-center xl:mr-2'>
             <div className='rounded-full w-[173px] h-[173px] xl:w-[132px] xl:h-[132px] bg-[#D9D9D9] mb-5'></div>

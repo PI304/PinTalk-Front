@@ -5,9 +5,9 @@ const FindPWPage = () => {
   const { value: email, onChange: onChangeEmail } = useInput();
 
   return (
-    <div className='flex lg:justify-center xl-min:justify-center xl:pl-10'>
+    <div className='flex lg:justify-center xl-min:justify-center md:pl-0 xl:pl-10'>
       <Slogan2 />
-      <div className='md-min:w-[calc(100%-1060px)] flex justify-center'>
+      <div className='md-min:w-[calc(100%-950px)] 2xl-min:w-[calc(100%-1060px)] flex justify-center'>
         <div className='flex flex-col text-text-1'>
           <div className='md:flex md:justify-center xl:mt-36 2xl:mt-52 mt-60'>
             <div>

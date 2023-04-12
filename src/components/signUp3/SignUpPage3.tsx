@@ -6,9 +6,11 @@ import { useAppSelector, useAppDispatch } from '@features/hooks';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { setData } from '@features/user/userSlice';
-import deleteCookie from '../../hooks/useDeleteCookie';
 
 const SignUpPage3 = () => {
+  const userState = useAppSelector((state: any) => state.user);
+  console.log(userState);
+
   const { value: service_name, onChange: onChangeService_name } = useInput();
   const { value: service_domain, onChange: onChangeService_domain } = useInput();
   const { value: service_expl, onChange: onChangeService_expl } = useInput();
@@ -21,15 +23,22 @@ const SignUpPage3 = () => {
     value === '' ? 'border-gray-300' : 'border-blue-main bg-blue-sub2';
 
   const onButtonClick = async () => {
-    const userData = await authApi.postSignUp({
-      email,
-      service_name,
-      service_expl,
-      service_domain,
-      password,
-    });
-    dispatch(setData(userData));
+    try {
+      const userData = await authApi.postSignUp({
+        email,
+        service_name,
+        service_expl,
+        service_domain,
+        password,
+      });
+      console.log(userData);
+      dispatch(setData(userData));
+      await router.push('/signupfin');
+    } catch (error) {
+      await router.push('/404');
+    }
   };
+
   const router = useRouter();
 
   useEffect(() => {
@@ -62,20 +71,6 @@ const SignUpPage3 = () => {
     }
   }, [router]);
 
-  useEffect(() => {
-    const onBeforeUnload = () => {
-      // 여기에 쿠키 이름을 대체하세요.
-      const cookieName = 'email_verification_code';
-      deleteCookie(cookieName);
-    };
-
-    window.addEventListener('beforeunload', onBeforeUnload);
-
-    // 컴포넌트가 언마운트 될 때 이벤트 리스너를 제거합니다.
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload);
-    };
-  }, []);
   return (
     <div className='flex justify-center items-center '>
       <div className=''>
@@ -157,14 +152,12 @@ const SignUpPage3 = () => {
                     회원가입
                   </div>
                 ) : (
-                  <Link href='./signupfin'>
-                    <button
-                      onClick={onButtonClick}
-                      type='button'
-                      className='p-2 w-full h-[44px] bg-gradient-to-r from-blue-main to-gradi-3 rounded-full text-white'>
-                      회원가입
-                    </button>
-                  </Link>
+                  <button
+                    onClick={onButtonClick}
+                    type='button'
+                    className='p-2 w-full h-[44px] bg-gradient-to-r from-blue-main to-gradi-3 rounded-full text-white'>
+                    회원가입
+                  </button>
                 )}
               </div>
             </div>

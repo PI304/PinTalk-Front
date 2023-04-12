@@ -6,7 +6,7 @@ const Slogan = () => {
           <div className='flex items-center xl:text-60 2xl:text-70 text-80 text-blue-main font-bold'>
             Put
             <img className='mx-3 xl:w-[100px] 2xl:w-[140px]' src='/hand.svg' alt='hand' />
-            <span className='text-white bg-blue-main rounded-full 2xl:py-1 2xl:px-9 px-11 py-5'>
+            <span className='text-white bg-blue-main rounded-full 2xl:py-1 2xl:px-9 px-11 py-3'>
               a pin
             </span>
             <img className='ml-3 xl:w-[100px] 2xl:w-[140px]' src='/pin.svg' alt='pin' />
@@ -14,7 +14,7 @@ const Slogan = () => {
         </div>
         <div className='flex mt-6'>
           <div className='flex items-center xl:text-60 2xl:text-70 text-80 font-bold text-blue-main'>
-            <div className='bg-blue-sub rounded-full 2xl:py-1 2xl:px-9 px-11 py-5'>anywhere!</div>
+            <div className='bg-blue-sub rounded-full 2xl:py-1 2xl:px-9 px-11 py-3'>anywhere!</div>
           </div>
           <img className='ml-3 xl:w-[100px] 2xl:w-[140px]' src='/world.svg' alt='world' />
         </div>

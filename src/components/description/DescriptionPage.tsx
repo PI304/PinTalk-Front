@@ -7,6 +7,18 @@ const Description = () => {
   const [scrollToId, setScrollToId] = useState('');
 
   useEffect(() => {
+    const storedScrollTo = sessionStorage.getItem('scrollTo');
+    if (storedScrollTo) {
+      const element = document.getElementById(storedScrollTo);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+      sessionStorage.removeItem('scrollTo');
+    }
+  }, []);
+  useEffect(() => {
     if (scrollToId) {
       const element = document.getElementById(scrollToId);
       if (element) {
@@ -48,7 +60,7 @@ const Description = () => {
           </div>
         </div>
       </div>
-      <div className='w-[1100px] xl:w-[800px] mx-auto md:w-[200px]'>
+      <div className='w-[1100px] xl:w-[800px] mx-auto'>
         <div className='font-PretendardMedium xl:text-18 text-20 flex mt-36 xl:mt-12 md:hidden'>
           <button
             className={`mr-4 xl:h-[47px] h-[60px] flex flex-col justify-between ${
@@ -101,7 +113,7 @@ const Description = () => {
         </div>
       </div>
       <div className='w-full border-t border-solid border-[#8A9EC4]'></div>
-      <div className='w-[1100px] xl:w-[800px] md:w-[430px] mx-auto'>
+      <div className='w-[1100px] xl:w-[800px] md:w-[370px] mx-auto'>
         <Content
           id='packageDownload'
           title={'패키지 다운로드'}
