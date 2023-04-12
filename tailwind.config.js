@@ -132,6 +132,7 @@ module.exports = {
       profile: '0px 8px 15px rgba(186, 186, 186, 0.1)',
       chat: '0px 4px 30px rgba(193, 200, 214, 0.5)',
       chat2: '0px 3.67268px 27.5451px rgba(193, 200, 214, 0.5)',
+      admin: '0px 4px 30px rgba(2, 47, 107, 0.35)',
     },
   },
   plugins: [],
