@@ -33,9 +33,9 @@ const SignUpPage3 = () => {
       });
       console.log(userData);
       dispatch(setData(userData));
-      await router.push('/signupfin');
+      router.push('/signupfin');
     } catch (error) {
-      await router.push('/404');
+      router.push('/404');
     }
   };
 

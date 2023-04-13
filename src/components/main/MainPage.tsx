@@ -2,11 +2,12 @@ import Link from 'next/link';
 import { svgArrowBlack } from '@styles/svg';
 import { Slogan } from '../common';
 import { svgArrowWhite } from '@styles/svg';
+import Image from 'next/image';
 
 const MainPage = () => {
   return (
     <div className='flex flex-col'>
-      <div className='flex xl:flex-col 2xl:h-[650px] h-[800px] justify-center'>
+      <div className='flex xl:flex-col xl:h-[600px] 2xl:h-[650px] h-[800px] justify-center'>
         <div className='xl:hidden'>
           <Slogan />
         </div>
@@ -94,15 +95,38 @@ const MainPage = () => {
       </div>
       <div className='bg-gradient-to-b from-gradi-1 to-gradi-2 flex justify-center'>
         <div className='xl:h-[780px] 2xl:h-[700px] h-[840px] xl:mt-16 flex xl:flex-col xl:items-center xl-min:justify-between xl:w-full 2xl:w-9/12 w-8/12'>
-          <div className='flex xl:hidden 2xl:mt-20 2xl:w-[530px] w-[650px]'>
-            <div className='2xl:w-[260px] w-[490px] 2xl:mt-28 mt-32 '>
-              <img
-                src='/users.svg'
-                alt='chat'
-                width={500}
-                height={10}
-                className='rounded-[10px] shadow-profile'
-              />
+          <div className='xl:hidden xl 2xl:w-[400px] w-[490px] 2xl:mt-24 mt-32 flex flex-col items-center'>
+            <img
+              src='/user1.svg'
+              alt='chat'
+              width={500}
+              height={10}
+              className='shadow-profile mb-3'
+            />
+            <img
+              src='/user2.svg'
+              alt='chat'
+              width={500}
+              height={10}
+              className='shadow-profile mb-3'
+            />
+            <img
+              src='/user3.svg'
+              alt='chat'
+              width={500}
+              height={10}
+              className='shadow-profile mb-3'
+            />
+            <img
+              src='/user4.svg'
+              alt='chat'
+              width={500}
+              height={10}
+              className='shadow-profile mb-3'
+            />
+            <img src='/user5.svg' alt='chat' width={500} height={10} className='shadow-profile' />
+            <div className='rounded-full flex items-center justify-center mt-10 py-3 px-5 w-[150px] text-white text-16 bg-gradient-to-r from-blue-main to-gradi-3 '>
+              대화 내보내기
             </div>
           </div>
           <div className='flex flex-col justify-center items-center '>
@@ -111,7 +135,7 @@ const MainPage = () => {
                 버튼 하나로 손 쉽게
                 <br /> 그동안의 대화 내용을 내보내요
               </div>
-              <div className='font-PretendardMedium text-text-2 xl:text-16 text-20 mt-7'>
+              <div className='font-PretendardMedium text-text-2 xl:text-16 text-19 mt-7'>
                 저장하고 싶었던 대화 내역들, 번거로운 붙여넣기는 그만!
                 <br />
                 핀톡에서는 한 번에 내보내고 저장할 수 있어요
@@ -126,6 +150,48 @@ const MainPage = () => {
                   <div>{svgArrowBlack}</div>
                 </div>
               </Link>
+            </div>
+          </div>
+          <div className='flex xl-min:hidden'>
+            <div className='w-[320px] mt-12 flex flex-col items-center '>
+              <img
+                src='/user1.svg'
+                alt='chat'
+                width={500}
+                height={10}
+                className='shadow-profile mb-3'
+              />
+              <img
+                src='/user2.svg'
+                alt='chat'
+                width={500}
+                height={10}
+                className='shadow-profile mb-3'
+              />
+              <img
+                src='/user3.svg'
+                alt='chat'
+                width={500}
+                height={10}
+                className='shadow-profile mb-3'
+              />
+              <img
+                src='/user4.svg'
+                alt='chat'
+                width={500}
+                height={10}
+                className='shadow-profile mb-3'
+              />
+              <img
+                src='/user5.svg'
+                alt='chat'
+                width={500}
+                height={10}
+                className='shadow-profile '
+              />
+              <div className='rounded-full flex items-center justify-center mt-7 py-2 w-[110px] text-white text-12 bg-gradient-to-r from-blue-main to-gradi-3 '>
+                대화 내보내기
+              </div>
             </div>
           </div>
         </div>
@@ -171,21 +237,45 @@ const MainPage = () => {
                 alt='chat'
                 width={500}
                 height={10}
-                className='rounded-[10px] shadow-cha2'
+                className='rounded-[10px]'
               />
             </div>
           </div>
         </div>
       </div>
-      <div className='bg-blue-main flex justify-center'>
-        <div className='h-[900px]'>
-          <div className='font-PretendardSemibold text-white text-34 text-center mt-24'>
+      <div className='bg-blue-main flex flex-col h-[920px] xl:h-[600px] items-center overflow-hidden'>
+        <div className=''>
+          <div className='font-PretendardSemibold text-white xl:hidden text-34 text-center mt-16'>
             핀톡에서 경험하는
             <br />
             간편한 대화, 지금 바로 시작해 보세요
           </div>
+          <div className='font-PretendardSemibold text-white xl-min:hidden text-28 text-center mt-16'>
+            핀톡에서 경험하는 간편한 대화,
+            <br />
+            지금 바로 시작해 보세요
+          </div>
         </div>
-        <div>{/* <img src='/landing_admin.svg' /> */}</div>
+        <div className='flex relative xl:w-9/12 2xl:w-[1100px] w-[1230px] mt-16'>
+          <div className='absolute left-0 xl:w-full xl:min-w-[360px] 2xl:w-[900px]'>
+            <Image
+              src='/landing_admin.svg'
+              alt='amdin'
+              width={1000}
+              height={550}
+              className='rounded-2xl  shadow-admin'
+            />
+          </div>
+          <div className='xl:w-3/12 xl:min-w-[100px] 2xl:w-[250px] w-[270px] absolute xl:left-3 xl-min:right-0 top-32'>
+            <Image
+              src='/landing_chat.svg'
+              alt='amdin'
+              width={500}
+              height={550}
+              className='shadow-admin rounded-md '
+            />
+          </div>
+        </div>
       </div>
       <div className='bg-[#1C5097] flex justify-center'>
         <div className='xl:h-[130px] h-[200px] flex justify-center items-center'>
