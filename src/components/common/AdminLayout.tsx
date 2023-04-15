@@ -2,28 +2,32 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { svgMessageOff, svgOut, svgPersonOff, svgPinTalkEmo2, svgSetting } from '@styles/svg';
 import { ChildrenType } from 'types/base';
-import { useAppDispatch } from '../../features/hooks';
-import { useAppSelector } from '@features/hooks';
-import { svgMessageOn, svgPersonOn } from '../../styles/svg';
+import { svgMessageOn, svgPersonOn } from '@styles/svg';
 import { useEffect } from 'react';
-import { setEmail } from '@features/user/userSlice';
+import { useAppDispatch, useAppSelector } from '@features/hooks';
+import { setId } from '@features/user/userSlice';
+import { rootState } from 'types/userState';
 
 const AdminLayout = ({ children }: ChildrenType) => {
-  const selector = useAppSelector;
-  const email = selector((state) => state.user.email);
   const dispatch = useAppDispatch();
-
   const router = useRouter();
   const isChatActive = router.pathname.includes('adminChat');
   const isProfileActive = router.pathname.includes('adminProfile');
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem('user');
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      dispatch(setEmail(parsedData));
+    const userId = localStorage.getItem('pintalk_id');
+    if (userId) {
+      dispatch(setId(parseInt(userId, 10)));
+    } else {
+      router.push('/404');
     }
-  }, [dispatch]);
+  }, [router]);
+  const id = useAppSelector((state: rootState) => state.user.id);
+
+  const handleLogout = () => {
+    localStorage.removeItem('pintalk_id');
+    router.push('/login');
+  };
 
   return (
     <div className='min-h-screen'>
@@ -35,14 +39,14 @@ const AdminLayout = ({ children }: ChildrenType) => {
             </div>
             <div className=' mt-30 flex flex-col mt-10 text-16 w-full'>
               <div>
-                <Link href={`/adminChat/${encodeURIComponent(email)}`}>
+                <Link href={`/adminChat/${encodeURIComponent(id)}`}>
                   <div
                     className={`flex items-center py-3 pl-7 ${isChatActive ? 'bg-blue-deep' : ''}`}>
                     <div className='mr-3'>{isChatActive ? svgMessageOn : svgMessageOff}</div>
                     <div className={`${isChatActive ? 'text-white' : 'text-blue-sub'}`}>대화창</div>
                   </div>
                 </Link>
-                <Link href={`/adminProfile/${encodeURIComponent(email)}`}>
+                <Link href={`/adminProfile/${encodeURIComponent(id)}`}>
                   <div
                     className={`flex items-center py-3 pl-7 ${
                       isProfileActive ? 'bg-blue-deep' : ''
@@ -60,12 +64,12 @@ const AdminLayout = ({ children }: ChildrenType) => {
               </div>
             </div>
           </div>
-          <Link
-            href='/login'
+          <button
+            onClick={handleLogout}
             className='flex items-center justify-center w-[100px] mx-auto text-white text-16 mb-10'>
             <div className='pr-3'>{svgOut}</div>
             <div>로그아웃</div>
-          </Link>
+          </button>
         </div>
         <div className='bg-BG-2 w-[calc(100%-180px)] min-w-[600px]'>
           <div>{children}</div>
