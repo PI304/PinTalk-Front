@@ -4,7 +4,7 @@ import { ChildrenType } from 'types/base';
 
 const LogoutLayout = ({ children }: ChildrenType) => {
   return (
-    <div className='xl:min-h-[900px] 2xl:min-h-[780px] min-h-[970px] h-screen bg-gradient-to-b from-gradi-1 to-gradi-2'>
+    <div className='xl:min-h-[900px] 2xl:min-h-[780px] min-h-[970px] h-screen lg-min:min-w-[1050px] xl-min:min-w-[1370px] w-screen bg-gradient-to-b from-gradi-1 to-gradi-2'>
       <nav className='flex items-center md:justify-center justify-between flex-wrap 2xl:mx-32 mx-44 2xl:h-[70px] h-[88px] md:mx-6'>
         <div>
           <Link href='/main'>
