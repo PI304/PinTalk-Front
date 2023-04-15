@@ -7,15 +7,17 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { setData } from '@features/user/userSlice';
 
+import { rootState } from 'types/userState';
+
 const SignUpPage3 = () => {
-  const userState = useAppSelector((state: any) => state.user);
+  const userState = useAppSelector((state: rootState) => state.user);
   console.log(userState);
 
   const { value: service_name, onChange: onChangeService_name } = useInput();
   const { value: service_domain, onChange: onChangeService_domain } = useInput();
   const { value: service_expl, onChange: onChangeService_expl } = useInput();
-  const email = useAppSelector((state: any) => state.user.email);
-  const password = useAppSelector((state: any) => state.user.password);
+  const email = useAppSelector((state: rootState) => state.user.email);
+  const password = useAppSelector((state: rootState) => state.user.password);
 
   const dispatch = useAppDispatch();
 
