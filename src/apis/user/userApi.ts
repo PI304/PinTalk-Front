@@ -2,7 +2,7 @@ import instance from '@apis/_axios/instance';
 import { UserId } from './userApi.type';
 
 export class UserApi {
-  async getUserById({ id }: UserId) {
+  async getUserDataById({ id }: UserId) {
     const { data } = await instance({
       method: 'GET',
       url: `users/${id}/`,

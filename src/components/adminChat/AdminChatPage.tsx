@@ -1,7 +1,6 @@
-import { AdminEmail } from 'types/email';
 import { svgDots } from '@styles/svg';
 
-const AdminChatPage = ({ adminEmail }: AdminEmail) => {
+const AdminChatPage = () => {
   return (
     <div className='flex'>
       <div className='w-[520px] pt-10 px-10'>

@@ -1,18 +1,20 @@
 import Link from 'next/link';
-import { svgCheckedIcon, svgUnCeckedIcon } from '@styles/svg';
+import { svgCheckedIcon, svgUnCeckedIcon, svgWarning } from '@styles/svg';
 import Slogan2 from '@components/common/Slogan2';
 import { useRouter } from 'next/router';
 import { AuthLogin } from '@apis/auth/authApi.type';
 import authApi from '@apis/auth/authApi';
 import { useState, useEffect } from 'react';
-import { useAppDispatch } from '../../features/hooks';
+import { useAppDispatch } from '@features/hooks';
 import { setData, setEmail, setPassword } from '@features/user/userSlice';
 import { useForm } from 'react-hook-form';
+import { userData } from 'types/userState';
 
 const LoginPage = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
-  const router = useRouter();
+  const [isLoginFailed, setIsLoginFailed] = useState(false);
 
   const {
     register,
@@ -45,21 +47,22 @@ const LoginPage = () => {
   const onSubmit = async (data: { email: string; password: string }) => {
     try {
       const body: AuthLogin = { email: data.email, password: data.password };
-      const response = await authApi.postLogin(body);
+      const response: userData = await authApi.postLogin(body);
+      console.log(response);
+      setIsLoginFailed(false);
       dispatch(setData(response));
-      dispatch(setEmail(data.email));
-      dispatch(setPassword(data.password));
-      sessionStorage.setItem('user', JSON.stringify(data.email));
+      localStorage.setItem('access_token', response.accessToken);
+      localStorage.setItem('pintalk_id', response.id.toString());
       router.push(`/adminChat/${encodeURIComponent(data.email)}`);
     } catch (error) {
-      console.error('로그인 실패:', error);
+      setIsLoginFailed(true);
     }
   };
 
   return (
-    <div className='flex lg:justify-center xl-min:justify-center md:pl-0 xl:pl-14'>
+    <div className='flex lg:justify-center xl-min:justify-center lg:pl-0 xl:pl-10'>
       <Slogan2 />
-      <div className='md-min:w-[calc(100%-950px)] 2xl-min:w-[calc(100%-1060px)] flex justify-center xl:mt-10'>
+      <div className='lg-min:w-[calc(100%-1060px)] xl-min:w-[calc(100%-950px)] 2xl-min:w-[calc(100%-1060px)] flex justify-center xl:mt-10'>
         <div className='xl-min:grid grid-rows-6'>
           <div className='row-span-1'></div>
           <div className='flex flex-col text-text-1 row-span-5'>
@@ -76,21 +79,46 @@ const LoginPage = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className='mt-10 text-text-1 font-PretendardMedium'>
                     <div className='mb-1 '>이메일</div>
-                    <input
-                      {...register('email', { required: true })}
-                      type='email'
-                      id='email'
-                      placeholder='이메일을 입력해주세요'
-                      className='xl:w-72 w-80 h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14'
-                    />
-                    <div className='mb-1'>비밀번호</div>
-                    <input
-                      {...register('password', { required: true })}
-                      type='password'
-                      id='password'
-                      placeholder='비밀번호를 입력해주세요'
-                      className='xl:w-72 w-80 h-12 px-4 py-2 border border-solid border-gray-300 rounded-lg mb-6 placeholder:text-text-5 placeholder:text-14'
-                    />
+                    <div className='flex relative xl:w-72 w-80'>
+                      <input
+                        {...register('email', { required: true })}
+                        type='email'
+                        id='email'
+                        placeholder='이메일을 입력해주세요'
+                        className={`w-full h-12 px-4 py-2 border border-solid ${
+                          isLoginFailed ? 'border-custom_red bg-red-50' : 'border-gray-300'
+                        } rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
+                      />
+                      {isLoginFailed && (
+                        <div className='absolute right-[10px] top-[12px]'>
+                          <div>{svgWarning}</div>
+                        </div>
+                      )}
+                    </div>
+                    <div className='flex items-center mb-1'>
+                      <div className='mr-2'>비밀번호</div>
+                      {isLoginFailed && (
+                        <div className='text-custom_red text-11 flex items-center'>
+                          <div className='mr-1'>이메일 또는 비밀번호가 올바르지 않아요</div>
+                        </div>
+                      )}
+                    </div>
+                    <div className='flex relative xl:w-72 w-80'>
+                      <input
+                        {...register('password', { required: true })}
+                        type='password'
+                        id='password'
+                        placeholder='비밀번호를 입력해주세요'
+                        className={`w-full h-12 px-4 py-2 border border-solid ${
+                          isLoginFailed ? 'border-custom_red bg-red-50' : 'border-gray-300'
+                        } rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
+                      />
+                      {isLoginFailed && (
+                        <div className='absolute right-[10px] top-[12px]'>
+                          <div>{svgWarning}</div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <button
                     type='submit'
