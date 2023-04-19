@@ -1,30 +1,21 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { svgMessageOff, svgOut, svgPersonOff, svgPinTalkEmo2, svgSetting } from '@styles/svg';
+import { svgMessageOff, svgOut, svgPersonOff, svgPinTalkEmoDark, svgSetting } from '@styles/svg';
 import { ChildrenType } from 'types/base';
 import { svgMessageOn, svgPersonOn } from '@styles/svg';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@features/hooks';
-import { setId } from '@features/user/userSlice';
-import { rootState } from 'types/userState';
+import { unsetAuthorHeader } from '@apis/_axios/instance';
+import { useFetchUserId } from '@hooks/useFetchUserId';
 
 const AdminLayout = ({ children }: ChildrenType) => {
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const isChatActive = router.pathname.includes('adminChat');
   const isProfileActive = router.pathname.includes('adminProfile');
-
-  useEffect(() => {
-    const userId = localStorage.getItem('pintalk_id');
-    if (userId) {
-      dispatch(setId(parseInt(userId, 10)));
-    } else {
-      router.push('/404');
-    }
-  }, [router]);
-  const id = useAppSelector((state: rootState) => state.user.id);
+  const id = useFetchUserId();
 
   const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    document.cookie = 'pintalk_refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    unsetAuthorHeader();
     localStorage.removeItem('pintalk_id');
     router.push('/login');
   };
@@ -35,7 +26,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
         <div className='bg-blue-main min-w-[180px] flex flex-col justify-between '>
           <div>
             <div className='font-Montserrat font-semibold  text-white text-21 mt-8 ml-7 flex '>
-              PinTalk<div className=''>{svgPinTalkEmo2}</div>
+              PinTalk<div className=''>{svgPinTalkEmoDark}</div>
             </div>
             <div className=' mt-30 flex flex-col mt-10 text-16 w-full'>
               <div>
