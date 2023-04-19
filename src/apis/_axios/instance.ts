@@ -54,7 +54,7 @@ instance.interceptors.response.use(
       } else {
         unsetAuthorHeader();
         localStorage.removeItem('id');
-        window.location.href = '/login';
+        window.location.href = '/404';
       }
     }
 
