@@ -69,10 +69,6 @@ const SignUpPage2 = () => {
     if (typeof window !== 'undefined') {
       const previousURL = localStorage.getItem('previousURL');
       const currentURL = window.location.href;
-      console.log('prev');
-      console.log(previousURL);
-      console.log('cur');
-      console.log(currentURL);
 
       if (previousURL === currentURL) {
         router.replace('/signup');
