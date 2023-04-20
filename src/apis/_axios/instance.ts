@@ -17,8 +17,7 @@ const unsetAuthorHeader = () => {
 };
 
 const refreshToken = async () => {
-  const token = await instance.post('/auth/token/refresh').then((res) => res.data);
-  console.log(token);
+  const token = await instance.post('auth/token/refresh/').then((res) => res.data);
   return token;
 };
 
@@ -53,7 +52,7 @@ instance.interceptors.response.use(
         return instance(reqData);
       } else {
         unsetAuthorHeader();
-        localStorage.removeItem('id');
+        localStorage.removeItem('pintalk_id');
         window.location.href = '/404';
       }
     }

@@ -1,5 +1,4 @@
 import instance from '@apis/_axios/instance';
-import fileinstance from '@apis/_axios/instance';
 import { UserId, UserImage, UserProfile } from './userApi.type';
 
 export class UserApi {

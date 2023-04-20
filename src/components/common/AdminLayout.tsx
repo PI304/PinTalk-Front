@@ -14,7 +14,6 @@ const AdminLayout = ({ children }: ChildrenType) => {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
-    document.cookie = 'pintalk_refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     unsetAuthorHeader();
     localStorage.removeItem('pintalk_id');
     router.push('/login');

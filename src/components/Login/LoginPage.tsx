@@ -6,7 +6,6 @@ import { AuthLogin } from '@apis/auth/authApi.type';
 import authApi from '@apis/auth/authApi';
 import { useState, useEffect } from 'react';
 import { useAppDispatch } from '@features/hooks';
-import { setData, setEmail, setPassword } from '@features/user/userSlice';
 import { useForm } from 'react-hook-form';
 import { userData } from 'types/userState';
 
@@ -50,7 +49,6 @@ const LoginPage = () => {
       const response: userData = await authApi.postLogin(body);
       console.log(response);
       setIsLoginFailed(false);
-      dispatch(setData(response));
       localStorage.setItem('access_token', response.accessToken);
       localStorage.setItem('pintalk_id', response.id.toString());
       router.push(`/adminChat/${encodeURIComponent(response.id)}`);
