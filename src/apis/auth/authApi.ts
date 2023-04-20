@@ -63,6 +63,12 @@ export class AuthApi {
     });
     return data;
   }
+  async postLeave() {
+    await instance({
+      method: 'POST',
+      url: 'auth/leave/',
+    });
+  }
 }
 
 const authApi = new AuthApi();

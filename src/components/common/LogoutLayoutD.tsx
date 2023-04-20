@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { svgPinTalkEmo } from '@styles/svg';
+import { svgPinTalkEmoWhite } from '@styles/svg';
 import { ChildrenType } from 'types/base';
 
 const LogoutLayoutD = ({ children }: ChildrenType) => {
@@ -9,7 +9,7 @@ const LogoutLayoutD = ({ children }: ChildrenType) => {
         <div>
           <Link href='/main'>
             <div className='font-Montserrat font-bold text-blue-main md:text-28 text-20  flex items-center'>
-              PinTalk<div className=''>{svgPinTalkEmo}</div>
+              PinTalk<div className=''>{svgPinTalkEmoWhite}</div>
             </div>
           </Link>
         </div>

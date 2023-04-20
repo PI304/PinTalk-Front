@@ -53,7 +53,7 @@ const LoginPage = () => {
       dispatch(setData(response));
       localStorage.setItem('access_token', response.accessToken);
       localStorage.setItem('pintalk_id', response.id.toString());
-      router.push(`/adminChat/${encodeURIComponent(data.email)}`);
+      router.push(`/adminChat/${encodeURIComponent(response.id)}`);
     } catch (error) {
       setIsLoginFailed(true);
     }
