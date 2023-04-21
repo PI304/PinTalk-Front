@@ -15,7 +15,6 @@ const AdminProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
   const id = useFetchUserId();
-  console.log(userData);
 
   const {
     register,
@@ -100,7 +99,7 @@ const AdminProfilePage = () => {
   const handleDeleteAccount = async () => {
     await authApi.postLeave();
     closeDeletePopup();
-    router.push('/404');
+    router.push('/main');
   };
 
   return (

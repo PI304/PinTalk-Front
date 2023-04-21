@@ -65,7 +65,7 @@ const EmailForm = () => {
   const onSubmit = async (data: EmailFormData) => {
     dispatch(setCodeValid(false));
     try {
-      const email = await authApi.postSendCode({ email: data.email });
+      await authApi.postSendCode({ email: data.email });
       setIsEmailSent(true);
       dispatch(setEmail(data.email));
     } catch (e) {
