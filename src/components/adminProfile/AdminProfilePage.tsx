@@ -9,6 +9,8 @@ import { unsetAuthorHeader } from '@apis/_axios/instance';
 import { useFetchUserId } from '@hooks/useFetchUserId';
 import authApi from '@apis/auth/authApi';
 import DeleteAccountPopup from './DeleteAccountPopup';
+import { ChangePasswordPopup } from './ChangePasswordPopup';
+import { AuthChangePw } from '@apis/auth/authApi.type';
 
 const AdminProfilePage = () => {
   const [userData, setUserData] = useState<userData | null>(null);
@@ -74,7 +76,6 @@ const AdminProfilePage = () => {
   };
 
   const uploadedImage = userData?.profileImage;
-  const bgImageStyle = uploadedImage ? `url(${uploadedImage})` : '';
 
   const handleEditButtonClick = () => {
     setIsEditing(true);
@@ -102,10 +103,29 @@ const AdminProfilePage = () => {
     router.push('/main');
   };
 
+  const [isChangePasswordPopupOpen, setIsChangePasswordPopupOpen] = useState(false);
+
+  const openChangePasswordPopup = () => {
+    setIsChangePasswordPopupOpen(true);
+  };
+
+  const closeChangePasswordPopup = () => {
+    setIsChangePasswordPopupOpen(false);
+  };
+
+  const handlePasswordChange = async (data: AuthChangePw) => {
+    try {
+      await authApi.postChangePassword(data);
+      closeChangePasswordPopup();
+    } catch (error) {
+      console.error('Error changing the password:', error);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex flex-col justify-center items-center h-screen pb-10 min-w-[930px] bg-BG-2 min-h-[750px]'>
-        <div className='flex justify-end w-10/12 '>
+      <div className='flex flex-col md-min:justify-center items-center h-screen pb-10 md-min:min-w-[930px] bg-BG-2 min-h-[750px] md:min-h-[950px]'>
+        <div className='flex justify-end w-10/12 md:w-11/12 md:max-w-[400px] mt-5'>
           {!isEditing ? (
             <div
               className='bg-BG-1 cursor-pointer text-text-4 font-PretendardMedium text-14 border-[0.5px] border-border rounded-[10px] py-2 px-4 mb-4'
@@ -115,18 +135,27 @@ const AdminProfilePage = () => {
           ) : (
             <button
               type='submit'
-              className='bg-BG-1 text-text-4 font-PretendardMedium text-14 border-[0.5px] border-border rounded-[10px] py-2 px-4 mb-4'>
-              완료
+              className='bg-blue-sub text-blue-main font-PretendardMedium text-14 border-[0.5px] border-blue-main rounded-[10px] py-2 px-4 mb-4'>
+              저장하기
             </button>
           )}
         </div>
-        <div className='w-10/12 h-[35%] xl:h-[250px] bg-white rounded-lg shadow-custom2 mb-8 flex items-center justify-center  xl-min:min-h-[300px]'>
-          <div className='w-10/12 h-4/5 flex'>
-            <div className='w-3/12 flex flex-col justify-center items-center xl:mr-2'>
-              {/* <img src={`${uploadedImage}`} alt='profileImage' /> */}
-              <div className='rounded-full w-[173px] h-[173px] xl:w-[132px] xl:h-[132px] mb-5'>
-                <div className='xl:hidden'>{svgPinTalkEmoPlaceBig}</div>
-                <div className='xl-min:hidden'>{svgPinTalkEmoPlaceSmall}</div>
+        <div className='w-10/12 md:w-11/12 md:max-w-[400px] xl-min:h-[35%] md-min:h-[250px] bg-white rounded-lg shadow-custom2 mb-8 flex items-center justify-center  xl-min:min-h-[300px]'>
+          <div className='w-10/12 md-min:h-4/5 flex md:flex-col md:py-6'>
+            <div className='w-3/12 flex flex-col justify-center items-center xl:mr-2 md:hidden'>
+              <div className='rounded-full w-[173px] h-[173px] xl:w-[132px] xl:h-[132px] md:w-[82px] md:h-[82px]  mb-5 overflow-hidden flex justify-center items-center'>
+                {uploadedImage ? (
+                  <img
+                    src={`${uploadedImage}`}
+                    alt='profileImage'
+                    className='object-cover w-full h-full'
+                  />
+                ) : (
+                  <div>
+                    <div className='xl:hidden'>{svgPinTalkEmoPlaceBig}</div>
+                    <div className='xl-min:hidden'>{svgPinTalkEmoPlaceSmall}</div>
+                  </div>
+                )}
               </div>
               <input
                 type='file'
@@ -141,29 +170,65 @@ const AdminProfilePage = () => {
                 </div>
               </label>
             </div>
-            <div className='w-[30%] h-[70%] flex my-auto flex-col justify-between ml-10'>
-              <div className='min-h-[60%] xl:min-h-[55%]'>
-                <div className='mb-1 font-PretendardMedium xl:text-14 text-16 text-text-1'>
-                  프로필 이름
+            <div className='md-min:w-[30%] md-min:h-[70%] md:h-[150px] flex my-auto flex-col justify-between md-min:ml-10'>
+              <div className='flex justify-between h-full'>
+                <div className='h-full'>
+                  <div className='xl-min:min-h-[60%] md-min:min-h-[55%] md:h-[65px]'>
+                    <div className='mb-1 font-PretendardMedium xl:text-14 text-16 text-text-1 md:mt-2'>
+                      프로필 이름
+                    </div>
+                    {isEditing ? (
+                      <input
+                        {...register('profileName', { required: isEditing })}
+                        placeholder='프로필 이름을 입력해주세요'
+                        className='border-border border w-full rounded-[10px] h-[40px] p-3 md:h-[30px] xl:text-12 text-14 placeholder:text-text-5'
+                      />
+                    ) : (
+                      <div className='text-16 xl:text-15 md:text-14 text-text-4 mt-2'>
+                        {userData?.profileName}
+                      </div>
+                    )}
+                  </div>
+                  <div className='md-min:min-h-[60%] md:h-[70px]'>
+                    <div className='mb-1 font-PretendardMedium xl:text-14 text-16 text-text-1'>
+                      이메일
+                    </div>
+                    <div className='text-16 xl:text-15 md:text-14 text-text-4 mt-2'>
+                      {userData?.email}
+                    </div>
+                  </div>
                 </div>
-                {isEditing ? (
+                <div className='flex flex-col justify-center items-center md-min:hidden'>
+                  <div className='rounded-full w-[100px] h-[100px] mb-5 md:mb-3 overflow-hidden flex justify-center items-center'>
+                    {uploadedImage ? (
+                      <img
+                        src={`${uploadedImage}`}
+                        alt='profileImage'
+                        className='object-cover w-full h-full'
+                      />
+                    ) : (
+                      <div>
+                        <div className='xl:hidden'>{svgPinTalkEmoPlaceBig}</div>
+                        <div className='xl-min:hidden'>{svgPinTalkEmoPlaceSmall}</div>
+                      </div>
+                    )}
+                  </div>
                   <input
-                    {...register('profileName', { required: isEditing })}
-                    placeholder='프로필 이름을 입력해주세요'
-                    className='border-border border w-full rounded-[10px] h-[40px] xl:mb-3 p-3 xl:text-12 text-14 placeholder:text-text-5'
+                    type='file'
+                    accept='image/*'
+                    onChange={handleFileChange}
+                    className='hidden'
+                    id='upload-photo'
                   />
-                ) : (
-                  <div className='text-16 text-text-4 mt-2'>{userData?.profileName}</div>
-                )}
-              </div>
-              <div className='min-h-[60%]'>
-                <div className='mb-1 font-PretendardMedium xl:text-14 text-16 text-text-1'>
-                  이메일
+                  <label htmlFor='upload-photo' className='cursor-pointer'>
+                    <div className='bg-BG-1 text-text-4 font-PretendardMedium text-12 border-[0.5px] border-border rounded-[10px] py-2 px-3'>
+                      사진 변경하기
+                    </div>
+                  </label>
                 </div>
-                <div className='text-16 text-text-4 mt-2'>{userData?.email}</div>
               </div>
             </div>
-            <div className='w-5/12 h-[70%] flex my-auto flex-col justify-center xl:ml-6 ml-8'>
+            <div className='w-5/12 md:w-full h-[70%] md:h-[100px] flex my-auto flex-col justify-center md:ml-0 xl:ml-6 ml-8'>
               <div className='mb-1 font-PretendardMedium xl:text-14  text-16 text-text-1'>
                 상태 메세지
               </div>
@@ -174,27 +239,30 @@ const AdminProfilePage = () => {
                   className='border-border border rounded-[10px] h-full p-3 xl:text-12  text-14 placeholder:text-text-5'
                 />
               ) : (
-                <textarea className='h-full text-16 text-text-4' value={userData?.description} />
+                <textarea
+                  className='h-full text-16 xl:text-15 md:text-14 text-text-4'
+                  value={userData?.description}
+                />
               )}
             </div>
           </div>
         </div>
-        <div className='flex w-10/12 xl:h-[280px] h-2/5 xl-min:min-h-[320px]'>
-          <div className='w-1/2 bg-white rounded-lg shadow-custom2 mr-8 py-5 flex flex-col '>
+        <div className='flex md:flex-col w-10/12 md:w-11/12 md:max-w-[400px] md-min:h-[280px] xl-min:h-2/5 xl-min:min-h-[320px]'>
+          <div className='md-min:w-1/2 bg-white rounded-lg shadow-custom2 md-min:mr-8 py-5 flex flex-col md:mb-8'>
             <div className='font-PretendardMedium xl:text-12 text-14 text-text-4 xl:ml-6 ml-7'>
               서비스 설정
             </div>
-            <div className='w-11/12 font-PretendardMedium xl:text-14 xl:pl-8 xl:pr-2 px-10 py-1 text-16 text-text-1h-full'>
+            <div className='w-full font-PretendardMedium xl:text-14 md:px-7 xl:px-8 px-10 pt-1 pb-4 text-16 text-text-1 h-full'>
               <div className={`flex my-3 items-center ${isEditing ? 'justify-between' : ''}`}>
                 <div className='w-[110px] xl:w-[90px]'>서비스 이름</div>
                 {isEditing ? (
                   <input
                     {...register('serviceName', { required: isEditing })}
                     placeholder='서비스 이름을 입력해주세요'
-                    className='border-border border rounded-[10px] xl:h-[30px] h-[40px] xl:w-8/12 w-9/12 xl:p-2 p-3 xl:text-12  text-14 placeholder:text-text-5'
+                    className='border-border border rounded-[10px] xl:h-[30px] h-[40px] md:w-9/12 xl:w-8/12 w-9/12 xl:p-2 p-3 xl:text-12  text-14 placeholder:text-text-5'
                   />
                 ) : (
-                  <div className='text-16 text-text-4 xl:h-[30px] h-[40px] flex items-center'>
+                  <div className='text-16 xl:text-15 md:text-14 text-text-4 xl:h-[30px] h-[40px] flex items-center'>
                     {userData?.serviceName}
                   </div>
                 )}
@@ -205,10 +273,10 @@ const AdminProfilePage = () => {
                   <input
                     {...register('serviceDomain', { required: isEditing })}
                     placeholder='서비스 도메인 주소를 입력해주세요'
-                    className='border-border border rounded-[10px] xl:h-[30px] h-[40px] xl:w-8/12 w-9/12 xl:p-2 p-3 xl:text-12 text-14 placeholder:text-text-5'
+                    className='border-border border rounded-[10px] xl:h-[30px] h-[40px] md:w-9/12 xl:w-8/12 w-9/12 xl:p-2 p-3 xl:text-12 text-14 placeholder:text-text-5'
                   />
                 ) : (
-                  <div className='text-16 text-text-4 xl:h-[30px] h-[40px] flex items-center'>
+                  <div className='text-16 xl:text-15 md:text-14 text-text-4 xl:h-[30px] h-[40px] flex items-center'>
                     {userData?.serviceDomain}
                   </div>
                 )}
@@ -219,40 +287,53 @@ const AdminProfilePage = () => {
                   <textarea
                     {...register('serviceExpl', { required: isEditing })}
                     placeholder='서비스 소개를 입력해주세요'
-                    className='border-border border rounded-[10px] min-h-[90px] h-full xl:w-8/12 w-9/12 xl:px-2 px-3 xl:py-1 py-2 xl:text-12 text-14 placeholder:text-text-5'
+                    className='border-border border rounded-[10px] min-h-[90px] h-full md:w-9/12 xl:w-8/12 w-9/12 xl:px-2 px-3 xl:py-1 py-2 xl:text-12 text-14 placeholder:text-text-5'
                   />
                 ) : (
                   <textarea
                     readOnly={!isEditing}
-                    className='text-14 text-text-4 min-h-[90px] h-full xl:w-8/12 w-[65%] '
+                    className='text-16 xl:text-15 md:text-14 text-text-4 min-h-[90px] h-full xl:w-8/12 w-[65%] '
                     value={userData?.serviceExpl}
                   />
                 )}
               </div>
             </div>
           </div>
-          <div className='w-1/2'>
-            <div className='h-3/5 xl:h-[170px] bg-white rounded-lg shadow-custom2 py-5 flex flex-col'>
+          <div className='md-min:w-1/2'>
+            <div className='h-[170px] xl:h-[155px] bg-white rounded-lg shadow-custom2 py-5 flex flex-col'>
               <div className='font-PretendardMedium xl:text-12 text-14 text-text-4 xl:ml-6 ml-7'>
                 계정 설정
               </div>
-              <div className='font-PretendardMedium xl:text-14 xl:px-8 px-10 py-2 text-16 text-text-1'>
+              <div className='font-PretendardMedium xl:text-14 xl:px-8 px-10 text-16 text-text-1'>
                 <div className='flex my-4 items-center'>
                   <div className='xl:w-[100px] w-[120px]'>Access Key</div>
-                  <div className='xl:mr-6 mr-12 w-1/2 overflow-auto'>{userData?.accessKey}</div>
+                  <div className='xl:mr-6 mr-12 w-1/2 overflow-auto whitespace-nowrap'>
+                    {userData?.accessKey}
+                  </div>
                   <button className='hover:bg-slate-100 hover:rounded-md p-1'>{svgCopyMini}</button>
                 </div>
-                <div className='flex mt-5 items-center'>
+                <div className='flex mt-7 xl:mt-5 items-center'>
                   <div className='xl:w-[100px] w-[120px]'>Secret Key</div>
-                  <div className='xl:mr-6 mr-12  w-1/2 overflow-auto '>{userData?.secretKey}</div>
+                  <div className='xl:mr-6 mr-12 w-1/2 overflow-auto whitespace-nowrap'>
+                    {userData?.secretKey}
+                  </div>
                   <button className='hover:bg-slate-100 hover:rounded-md p-1'>{svgCopyMini}</button>
                 </div>
               </div>
             </div>
-            <div className='my-6 xl:text-14 text-16'>
-              <button className='bg-blue-main  text-white rounded-[10px] py-2 px-3 mr-4'>
+            <div className='mt-6 xl:text-14 text-16 md:flex md:justify-end'>
+              <button
+                onClick={openChangePasswordPopup}
+                className='bg-blue-main  text-white rounded-[10px] py-2 px-3 mr-4'>
                 비밀번호 변경
               </button>
+              {isChangePasswordPopupOpen && (
+                <ChangePasswordPopup
+                  isOpen={isChangePasswordPopupOpen}
+                  onClose={closeChangePasswordPopup}
+                  onChangePassword={handlePasswordChange}
+                />
+              )}
               <button
                 onClick={openDeletePopup}
                 className='text-white bg-custom_red border-[0.5px] border-border rounded-[10px] py-2 px-3'>
