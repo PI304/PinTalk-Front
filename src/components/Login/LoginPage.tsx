@@ -5,13 +5,11 @@ import { useRouter } from 'next/router';
 import { AuthLogin } from '@apis/auth/authApi.type';
 import authApi from '@apis/auth/authApi';
 import { useState, useEffect } from 'react';
-import { useAppDispatch } from '@features/hooks';
 import { useForm } from 'react-hook-form';
 import { userData } from 'types/userState';
 
 const LoginPage = () => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
   const [isLoginFailed, setIsLoginFailed] = useState(false);
 

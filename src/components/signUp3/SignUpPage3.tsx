@@ -1,6 +1,5 @@
-import useInput from '../../hooks/useInput';
-import Link from 'next/link';
-import { svgCheckIcon2 } from '../../styles/svg';
+import useInput from '@hooks/useInput';
+import { svgCheckIcon2 } from '@styles/svg';
 import authApi from '@apis/auth/authApi';
 import { useAppSelector, useAppDispatch } from '@features/hooks';
 import { useRouter } from 'next/router';
