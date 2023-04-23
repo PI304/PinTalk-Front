@@ -6,12 +6,13 @@ import { rootState } from 'types/userState';
 
 const SignUpForm = () => {
   const isCodeValid = useAppSelector((state: rootState) => state.user.codeValid);
+  const isEmailEmpty = useAppSelector((state: rootState) => state.user.isEmailEmpty);
   return (
     <div className='box-border bg-white md:w-[362px] w-[636px] md:h-[303px] h-[344px] shadow-custom rounded-[10px] flex flex-col justify-center items-center mt-10'>
       <EmailForm />
       <VerificationForm />
       <div className='md:mt-2 mt-6 flex justify-end md:w-[300px] w-[580px]'>
-        {isCodeValid ? (
+        {isCodeValid && !isEmailEmpty ? (
           <Link href='./signup2'>
             <button
               type='button'

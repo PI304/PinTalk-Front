@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch } from '@features/hooks';
-import { setEmail, setCodeValid } from '@features/user/userSlice';
+import { setEmail, setCodeValid, setIsEmailEmpty } from '@features/user/userSlice';
 import { svgCheckIcon3, svgWarning } from '@styles/svg';
 import authApi from '@apis/auth/authApi';
 
@@ -12,8 +12,8 @@ type EmailFormData = {
 const EmailForm = () => {
   const [checkEmail, setCheckEmail] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
-  const [isEmpty, setIsEmpty] = useState(true);
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   const dispatch = useAppDispatch();
 
@@ -22,6 +22,11 @@ const EmailForm = () => {
   });
 
   const email = watch('email');
+
+  useEffect(() => {
+    const isEmpty = !email || email.trim() === '';
+    dispatch(setIsEmailEmpty(isEmpty));
+  }, [email, dispatch]);
 
   const isValidEmail = (email: string): boolean => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -105,6 +110,7 @@ const EmailForm = () => {
           id='email'
           {...register('email', { required: true })}
           onChange={handleEmailChange}
+          disabled={emailValid && checkEmail && isEmailSent}
           placeholder='이메일 형식에 맞게 입력해주세요'
           className={`md:w-[212px] w-80 h-12 px-3 py-2 border border-solid rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14 ${
             !emailValid || (!checkEmail && !isEmpty)
