@@ -17,9 +17,26 @@ const unsetAuthorHeader = () => {
 };
 
 const refreshToken = async () => {
-  const token = await instance.post('auth/token/refresh/').then((res) => res.data);
-  return token;
+  try {
+    const response = await instance.post('auth/token/refresh/');
+    if (response.status === 204) {
+      return { noRefreshNeeded: true };
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Failed to refresh token:', error);
+    return null;
+  }
 };
+
+const requestWithoutInterceptor = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json; version=1',
+  },
+  withCredentials: true,
+});
 
 instance.interceptors.request.use(
   async (config) => {
@@ -45,15 +62,23 @@ instance.interceptors.response.use(
 
     if (isExpiredToken) {
       const token = await refreshToken();
+      console.log(token);
       if (token?.access) {
         setAuthorHeader(token.access);
         localStorage.setItem('access_token', token.access);
         reqData.headers.Authorization = `Bearer ${token?.access}`;
-        return instance(reqData);
+        return requestWithoutInterceptor(reqData);
+      } else if (token?.noRefreshNeeded) {
+        return Promise.reject(error);
       } else {
         unsetAuthorHeader();
         localStorage.removeItem('pintalk_id');
-        window.location.href = '/404';
+        localStorage.removeItem('access_token');
+        if (res?.data?.code === 'token_not_valid') {
+          window.location.href = '/login';
+        } else {
+          window.location.href = '/404';
+        }
       }
     }
 

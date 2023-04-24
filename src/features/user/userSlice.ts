@@ -6,6 +6,7 @@ const initialState: userState = {
   email: '',
   password: '',
   codeValid: false,
+  isEmailEmpty: true,
   data: {
     accessKey: '',
     accessToken: '',
@@ -45,6 +46,10 @@ const userSlice = createSlice({
       ...state,
       codeValid: action.payload,
     }),
+    setIsEmailEmpty: (state, action) => ({
+      ...state,
+      isEmailEmpty: action.payload,
+    }),
     setData: (state, action) => ({
       ...state,
       data: action.payload,
@@ -56,5 +61,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setId, setEmail, setPassword, setValues, setCodeValid, setData } = userSlice.actions;
+export const { setId, setEmail, setPassword, setValues, setCodeValid, setIsEmailEmpty, setData } =
+  userSlice.actions;
 export default userSlice.reducer;

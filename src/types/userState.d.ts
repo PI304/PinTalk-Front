@@ -3,6 +3,7 @@ export type userState = {
   email: string;
   password: string;
   codeValid: boolean;
+  isEmailEmpty: boolean;
   data: {
     accessKey: string;
     accessToken: string;

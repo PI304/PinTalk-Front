@@ -1,10 +1,11 @@
 import instance from '@apis/_axios/instance';
 import { AuthChangePw, AuthCode, AuthEmail, AuthLogin, AuthSignUp } from './authApi.type';
+import instance2 from '@apis/_axios/instance2';
 
 export class AuthApi {
   async postCheckEmail(body: AuthEmail): Promise<AuthEmail | boolean> {
     try {
-      const { data } = await instance({
+      const { data } = await instance2({
         method: 'POST',
         url: 'auth/check-email/',
         data: body,
@@ -16,7 +17,7 @@ export class AuthApi {
   }
 
   async postSendCode(body: AuthEmail): Promise<AuthEmail> {
-    const { data } = await instance({
+    const { data } = await instance2({
       method: 'POST',
       url: 'auth/email-verification/',
       data: body,
@@ -24,7 +25,7 @@ export class AuthApi {
     return data;
   }
   async postCodeConfirm(body: AuthCode) {
-    const { data } = await instance({
+    const { data } = await instance2({
       method: 'POST',
       url: 'auth/email-confirmation/',
       data: body,
@@ -32,7 +33,7 @@ export class AuthApi {
     return data;
   }
   async postLogin(body: AuthLogin) {
-    const { data } = await instance({
+    const { data } = await instance2({
       method: 'POST',
       url: 'auth/login/',
       data: body,
@@ -56,7 +57,7 @@ export class AuthApi {
     return data;
   }
   async postSignUp(body: AuthSignUp) {
-    const { data } = await instance({
+    const { data } = await instance2({
       method: 'POST',
       url: 'auth/signup/',
       data: body,

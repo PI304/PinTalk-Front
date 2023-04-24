@@ -1,16 +1,13 @@
 import { useState } from 'react';
-import useInput from '../../hooks/useInput';
+import useInput from '@hooks/useInput';
 import Link from 'next/link';
 import { svgCheckIcon2, svgCheckIcon3, svgWarning } from '@styles/svg';
-import { useAppDispatch } from '../../features/hooks';
+import { useAppDispatch } from '@features/hooks';
 import { setPassword } from '@features/user/userSlice';
-import { useAppSelector } from '@features/hooks';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const SignUpPage2 = () => {
-  const userState = useAppSelector((state: any) => state.user);
-  console.log(userState);
   const [passwordValid, setPasswordValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -137,7 +134,7 @@ const SignUpPage2 = () => {
                         ? 'border-custom_red bg-red-50'
                         : passWord !== ''
                         ? 'border-blue-main bg-blue-sub2'
-                        : 'border-gray-300'
+                        : 'border-border'
                     } rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
                   />
                   <button
@@ -177,7 +174,7 @@ const SignUpPage2 = () => {
                         ? 'border-custom_red bg-red-50'
                         : passWord === passWordCheck && passWordCheck !== ''
                         ? 'border-blue-main bg-blue-sub2'
-                        : 'border-gray-300'
+                        : 'border-border'
                     } rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
                   />
                   <button
