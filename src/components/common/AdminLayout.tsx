@@ -121,7 +121,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
             <div>로그아웃</div>
           </button>
         </div>
-        <div className='bg-BG-2 md-min:w-[calc(100%-180px)] md-min:min-w-[600px]'>
+        <div className='bg-BG-2 md-min:w-[calc(100%-180px)] md-min:min-w-[600px] min-h-[750px]'>
           <div>{children}</div>
         </div>
       </div>

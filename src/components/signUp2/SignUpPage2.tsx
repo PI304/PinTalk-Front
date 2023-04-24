@@ -79,7 +79,7 @@ const SignUpPage2 = () => {
   return (
     <div className='flex justify-center items-center '>
       <div className=''>
-        <div className='text-center md:mt-10 mt-20'>
+        <div className='text-center md:mt-10 mt-12'>
           <div className='font-Montserrat font-bold text-blue-main text-38'>SIGN UP</div>
           <div className='text-text-3 mt-3'>
             서비스 이용에 필요한 안전한 비밀번호를 설정해 주세요

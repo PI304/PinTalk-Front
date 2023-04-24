@@ -124,7 +124,7 @@ const AdminProfilePage = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex flex-col md-min:justify-center items-center h-screen pb-10 md-min:min-w-[930px] bg-BG-2 min-h-[750px] md:min-h-[950px]'>
+      <div className='flex flex-col md-min:justify-center items-center h-screen pb-10 md-min:min-w-[930px] bg-BG-2 md:min-h-[950px]'>
         <div className='flex justify-end w-10/12 md:w-11/12 md:max-w-[400px] mt-5'>
           {!isEditing ? (
             <div

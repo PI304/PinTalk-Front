@@ -8,7 +8,7 @@ const SignUpPage = () => {
   return (
     <div className='flex justify-center items-center '>
       <div className=''>
-        <div className='text-center md:mt-10 mt-20'>
+        <div className='text-center md:mt-10 mt-12'>
           <div className='font-Montserrat font-bold text-blue-main text-38'>SIGN UP</div>
           <div className='text-text-3 mt-3'>환영합니다! 핀톡과 함께 편리한 대화, 시작해보세요</div>
         </div>

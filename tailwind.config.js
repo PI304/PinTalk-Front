@@ -62,12 +62,14 @@ module.exports = {
         80: '5rem',
       },
       colors: {
-        border: '#DDDDDD',
+        border: { 1: '#DDDDDD', 2: '#CAD2E7' },
         blue: {
           main: '#2F80ED',
           deep: '#1E71E1',
           sub: '#D0DFFB',
           sub2: '#EDF1F8',
+          chat: '#DEE4F3',
+          icon: '#7CB4FF',
         },
         custom_red: '#EB5757',
         BG: {
