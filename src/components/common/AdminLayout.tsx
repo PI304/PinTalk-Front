@@ -1,10 +1,18 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { svgMessageOff, svgOut, svgPersonOff, svgPinTalkEmoDark, svgSettingOff } from '@styles/svg';
+import {
+  svgMessageOff,
+  svgOut,
+  svgPersonOff,
+  svgPinTalkEmoDark,
+  svgSettingOff,
+  svgSettingOn,
+} from '@styles/svg';
 import { ChildrenType } from 'types/base';
 import { svgMessageOn, svgPersonOn } from '@styles/svg';
 import { unsetAuthorHeader } from '@apis/_axios/instance';
 import { useFetchUserId } from '@hooks/useFetchUserId';
+import authApi from '@apis/auth/authApi';
 
 const AdminLayout = ({ children }: ChildrenType) => {
   const router = useRouter();
@@ -13,7 +21,8 @@ const AdminLayout = ({ children }: ChildrenType) => {
   const isSettingActive = router.pathname.includes('adminSetting');
   const id = useFetchUserId();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await authApi.postLogout();
     localStorage.removeItem('access_token');
     unsetAuthorHeader();
     localStorage.removeItem('pintalk_id');
@@ -63,7 +72,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
                   className={`flex items-center py-3 pl-7 ${
                     isSettingActive ? 'bg-blue-deep' : ''
                   }`}>
-                  <div className='mr-3'>{isSettingActive ? svgSettingOff : svgSettingOff}</div>
+                  <div className='mr-3'>{isSettingActive ? svgSettingOn : svgSettingOff}</div>
                   <div className={`${isSettingActive ? 'text-white' : 'text-blue-sub'}`}>
                     환경설정
                   </div>
@@ -101,7 +110,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
                 href={`/adminSetting/${encodeURIComponent(id)}`}
                 className='w-1/3 flex justify-center flex-col items-center'>
                 <div className='flex items-center py-3 '>
-                  <div className='mr-3'>{isSettingActive ? svgSettingOff : svgSettingOff}</div>
+                  <div className='mr-3'>{isSettingActive ? svgSettingOn : svgSettingOff}</div>
                   <div className={`${isSettingActive ? 'text-white' : 'text-blue-sub'}`}>
                     환경설정
                   </div>
@@ -122,7 +131,7 @@ const AdminLayout = ({ children }: ChildrenType) => {
           </button>
         </div>
         <div className='bg-BG-2 md-min:w-[calc(100%-180px)] md-min:min-w-[600px]'>
-          <div>{children}</div>
+          <div className='h-full'>{children}</div>
         </div>
       </div>
     </div>

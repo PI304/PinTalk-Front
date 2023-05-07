@@ -73,9 +73,9 @@ const SignUpPage3 = () => {
   }, [router]);
 
   return (
-    <div className='flex justify-center items-center '>
+    <div className='flex justify-center items-center'>
       <div className=''>
-        <div className='text-center md:mt-10 mt-20'>
+        <div className='text-center md:mt-10 mt-12'>
           <div className='font-Montserrat font-bold text-blue-main text-38'>SIGN UP</div>
           <div className='text-text-3 mt-3'>
             핀톡을 이용하고자 하는 서비스의 정보를 입력해 주세요

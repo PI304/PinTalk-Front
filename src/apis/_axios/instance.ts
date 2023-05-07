@@ -1,4 +1,5 @@
 import axios from 'axios';
+import instance2 from './instance2';
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -18,7 +19,8 @@ const unsetAuthorHeader = () => {
 
 const refreshToken = async () => {
   try {
-    const response = await instance.post('auth/token/refresh/');
+    const response = await instance2.post('auth/token/refresh/');
+    console.log(response);
     if (response.status === 204) {
       return { noRefreshNeeded: true };
     }
@@ -42,7 +44,7 @@ instance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem('access_token');
     if (token) {
-      setAuthorHeader(token as string);
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -62,16 +64,14 @@ instance.interceptors.response.use(
 
     if (isExpiredToken) {
       const token = await refreshToken();
-      console.log(token);
       if (token?.access) {
-        setAuthorHeader(token.access);
         localStorage.setItem('access_token', token.access);
         reqData.headers.Authorization = `Bearer ${token?.access}`;
         return requestWithoutInterceptor(reqData);
       } else if (token?.noRefreshNeeded) {
         return Promise.reject(error);
       } else {
-        unsetAuthorHeader();
+        delete reqData.headers.Authorization;
         localStorage.removeItem('pintalk_id');
         localStorage.removeItem('access_token');
         if (res?.data?.code === 'token_not_valid') {

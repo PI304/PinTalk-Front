@@ -7,12 +7,14 @@ interface ChangePasswordPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onChangePassword: (data: AuthChangePw) => void;
+  password: boolean;
 }
 
 export const ChangePasswordPopup = ({
   isOpen,
   onClose,
   onChangePassword,
+  password,
 }: ChangePasswordPopupProps) => {
   const { value: currentPassword, onChange: onChangeCurrentPassword } = useInput();
   const { value: newPassword, onChange: onChangeNewPassword } = useInput();
@@ -22,7 +24,9 @@ export const ChangePasswordPopup = ({
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [isEmpty2, setIsEmpty2] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
+  const [passwordValid2, setPasswordValid2] = useState(true);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -40,7 +44,7 @@ export const ChangePasswordPopup = ({
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeNewPassword(event);
+    onChangeCurrentPassword(event);
     const value = event.target.value.trim();
     if (validatePassword(value) || value === '') {
       setPasswordValid(true);
@@ -51,6 +55,20 @@ export const ChangePasswordPopup = ({
       setIsEmpty(true);
     } else {
       setIsEmpty(false);
+    }
+  };
+  const handlePasswordChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeNewPassword(event);
+    const value = event.target.value.trim();
+    if (validatePassword(value) || value === '') {
+      setPasswordValid2(true);
+    } else {
+      setPasswordValid2(false);
+    }
+    if (value === '') {
+      setIsEmpty2(true);
+    } else {
+      setIsEmpty2(false);
     }
   };
 
@@ -72,10 +90,17 @@ export const ChangePasswordPopup = ({
             <input
               id='currentPassword'
               type={showPassword ? 'text' : 'password'}
-              className='border-border rounded-[10px] border h-[40px] w-[240px] px-3 text-text-5 text-12'
+              className={`rounded-[10px] border h-[40px] w-[240px] px-3 text-text-5 text-12 focus:outline-none ${
+                !passwordValid || !password
+                  ? 'border-custom_red bg-red-50'
+                  : currentPassword !== ''
+                  ? 'border-blue-main bg-blue-sub2'
+                  : 'border-border'
+              } `}
               placeholder='현재 비밀번호를 입력해주세요'
               value={currentPassword}
-              onChange={onChangeCurrentPassword}
+              onChange={handlePasswordChange}
+              autoComplete='current-password'
             />
             <button
               type='button'
@@ -87,6 +112,16 @@ export const ChangePasswordPopup = ({
                 <img width={24} src='/eye-open.svg' alt='eye-open' />
               )}
             </button>
+            {(!passwordValid || !password) && (
+              <div className='absolute right-[41px] top-[8px]'>
+                <div>{svgWarning}</div>
+              </div>
+            )}
+            {passwordValid && !isEmpty && password && (
+              <div className='absolute right-[41px] top-[8px]'>
+                <div>{svgCheckIcon3}</div>
+              </div>
+            )}
           </div>
         </div>
         <div className='mb-3 flex md-min:items-center md:flex-col'>
@@ -97,8 +132,8 @@ export const ChangePasswordPopup = ({
             <input
               id='newPassword'
               type={showPassword2 ? 'text' : 'password'}
-              className={`rounded-[10px] border h-[40px] w-[240px] px-3 text-text-5 text-12 ${
-                !passwordValid
+              className={`rounded-[10px] border h-[40px] w-[240px] px-3 text-text-5 text-12 focus:outline-none ${
+                !passwordValid2
                   ? 'border-custom_red bg-red-50'
                   : newPassword !== ''
                   ? 'border-blue-main bg-blue-sub2'
@@ -106,7 +141,8 @@ export const ChangePasswordPopup = ({
               } `}
               placeholder='8~16자리 / 영문, 숫자, 특수문자 조합'
               value={newPassword}
-              onChange={handlePasswordChange}
+              onChange={handlePasswordChange2}
+              autoComplete='new-password'
             />
             <button
               type='button'
@@ -118,12 +154,12 @@ export const ChangePasswordPopup = ({
                 <img width={24} src='/eye-open.svg' alt='eye-open' />
               )}
             </button>
-            {!passwordValid && (
+            {!passwordValid2 && (
               <div className='absolute right-[41px] top-[8px]'>
                 <div>{svgWarning}</div>
               </div>
             )}
-            {passwordValid && !isEmpty && (
+            {passwordValid2 && !isEmpty2 && (
               <div className='absolute right-[41px] top-[8px]'>
                 <div>{svgCheckIcon3}</div>
               </div>
@@ -138,9 +174,9 @@ export const ChangePasswordPopup = ({
             <input
               id='passwordCheck'
               type={showPassword3 ? 'text' : 'password'}
-              className={`rounded-[10px] border h-[40px] w-[240px] px-3 text-text-5 text-12 ${
+              className={`rounded-[10px] border h-[40px] w-[240px] px-3 text-text-5 text-12 focus:outline-none ${
                 (newPassword !== passwordCheck && passwordCheck !== '') ||
-                (!passwordValid && passwordCheck !== '')
+                (!passwordValid2 && passwordCheck !== '')
                   ? 'border-custom_red bg-red-50'
                   : newPassword === passwordCheck && passwordCheck !== ''
                   ? 'border-blue-main bg-blue-sub2'
@@ -149,6 +185,7 @@ export const ChangePasswordPopup = ({
               placeholder='비밀번호를 다시 입력해주세요'
               value={passwordCheck}
               onChange={onChangePasswordCheck}
+              autoComplete='new-password'
             />
             <button
               type='button'
@@ -161,14 +198,14 @@ export const ChangePasswordPopup = ({
               )}
             </button>
             {((newPassword !== passwordCheck && passwordCheck !== '') ||
-              (!passwordValid && passwordCheck !== '')) && (
+              (!passwordValid2 && passwordCheck !== '')) && (
               <div className='absolute right-[41px] top-[8px]'>
                 <div>{svgWarning}</div>
               </div>
             )}
             {newPassword === passwordCheck &&
               passwordCheck !== '' &&
-              passwordValid &&
+              passwordValid2 &&
               passwordCheck !== '' && (
                 <div className='absolute right-[41px] top-[8px]'>
                   <div>{svgCheckIcon3}</div>
@@ -177,8 +214,27 @@ export const ChangePasswordPopup = ({
           </div>
         </div>
         <button
+          disabled={
+            !(
+              !isEmpty &&
+              newPassword === passwordCheck &&
+              passwordCheck !== '' &&
+              passwordValid2 &&
+              passwordCheck !== '' &&
+              passwordValid
+            )
+          }
           onClick={() => onChangePassword({ currentPassword, newPassword })}
-          className='bg-gradient-to-r from-blue-main to-gradi-3 text-white md-min:text-16 font-PretendardMedium flex items-center justify-center rounded-[50px] w-[130px] h-[43px] md:w-[110px] md:h-[40px]'>
+          className={`${
+            !isEmpty &&
+            passwordValid &&
+            newPassword === passwordCheck &&
+            passwordCheck !== '' &&
+            passwordValid2 &&
+            passwordCheck !== ''
+              ? 'bg-gradient-to-r from-blue-main to-gradi-3'
+              : 'bg-blue-sub'
+          } text-white md-min:text-16 font-PretendardMedium flex items-center justify-center rounded-[50px] w-[130px] h-[43px] md:w-[110px] md:h-[40px]`}>
           변경하기
         </button>
       </div>

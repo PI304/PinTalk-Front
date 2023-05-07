@@ -13,3 +13,7 @@ export type UserProfile = {
 export type UserImage = {
   profileImage: File;
 };
+
+export type onlineStatus = {
+  use_online_status: boolean;
+};

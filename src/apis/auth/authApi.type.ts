@@ -23,3 +23,7 @@ export type AuthSignUp = {
   service_domain: string;
   password: string;
 };
+
+export type AuthPassword = {
+  password: string;
+};
