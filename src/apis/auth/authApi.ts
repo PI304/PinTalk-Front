@@ -1,5 +1,12 @@
 import instance from '@apis/_axios/instance';
-import { AuthChangePw, AuthCode, AuthEmail, AuthLogin, AuthSignUp } from './authApi.type';
+import {
+  AuthChangePw,
+  AuthCode,
+  AuthEmail,
+  AuthLogin,
+  AuthPassword,
+  AuthSignUp,
+} from './authApi.type';
 import instance2 from '@apis/_axios/instance2';
 
 export class AuthApi {
@@ -64,10 +71,24 @@ export class AuthApi {
     });
     return data;
   }
-  async postLeave() {
+  async postLeave(body: AuthPassword) {
     await instance({
       method: 'POST',
       url: 'auth/leave/',
+      data: body,
+    });
+  }
+  async postLogout() {
+    await instance({
+      method: 'POST',
+      url: 'auth/logout/',
+    });
+  }
+  async postRestore(body: AuthEmail) {
+    await instance2({
+      method: 'POST',
+      url: 'auth/restore/',
+      data: body,
     });
   }
 }

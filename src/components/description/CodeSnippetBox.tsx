@@ -15,6 +15,7 @@ const CodeSnippetBox = ({ code, language }: CodeSnippetBoxProps) => {
   }
 
   const copyButtonRef = useRef<HTMLButtonElement>(null);
+  const copyButtonRef2 = useRef<HTMLButtonElement>(null);
 
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
 
@@ -55,19 +56,31 @@ const CodeSnippetBox = ({ code, language }: CodeSnippetBoxProps) => {
   };
 
   useEffect(() => {
-    const clipboard = new ClipboardJS(copyButtonRef.current!);
+    if (copyButtonRef.current) {
+      const clipboard = new ClipboardJS(copyButtonRef.current);
 
-    clipboard.on('success', (e) => {
-      console.log('복사 성공:', e.text);
-    });
+      clipboard.on('success', (e) => {});
 
-    clipboard.on('error', (e) => {
-      console.error('복사 실패:', e.action);
-    });
+      clipboard.on('error', (e) => {});
 
-    return () => {
-      clipboard.destroy();
-    };
+      return () => {
+        clipboard.destroy();
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    if (copyButtonRef2.current) {
+      const clipboard2 = new ClipboardJS(copyButtonRef2.current);
+
+      clipboard2.on('success', (e) => {});
+
+      clipboard2.on('error', (e) => {});
+
+      return () => {
+        clipboard2.destroy();
+      };
+    }
   }, []);
 
   return (
@@ -82,7 +95,7 @@ const CodeSnippetBox = ({ code, language }: CodeSnippetBoxProps) => {
         {svgCopy}
       </button>
       <button
-        ref={copyButtonRef}
+        ref={copyButtonRef2}
         data-clipboard-text={code}
         className='absolute md-min:hidden top-[6px] right-[6px] hover:bg-slate-700 hover:rounded-md p-[2px] '>
         {svgCopyMini}

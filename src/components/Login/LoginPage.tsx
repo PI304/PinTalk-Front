@@ -2,17 +2,21 @@ import Link from 'next/link';
 import { svgCheckedIcon, svgUnCeckedIcon, svgWarning } from '@styles/svg';
 import Slogan2 from '@components/common/Slogan2';
 import { useRouter } from 'next/router';
-import { AuthLogin } from '@apis/auth/authApi.type';
+import { AuthEmail, AuthLogin } from '@apis/auth/authApi.type';
 import authApi from '@apis/auth/authApi';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { userData } from 'types/userState';
+import RestoreAccountPopup from './RestoreAccountPopup';
 
 const LoginPage = () => {
   const router = useRouter();
   const [saveEmail, setSaveEmail] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoginFailed, setIsLoginFailed] = useState(false);
-
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   const {
     register,
     handleSubmit,
@@ -23,9 +27,9 @@ const LoginPage = () => {
     mode: 'onChange',
   });
 
+  const email = getValues('email');
   const handleEmailSave = () => {
     setSaveEmail(!saveEmail);
-    const email = getValues('email');
     if (!saveEmail) {
       localStorage.setItem('email', email);
     } else {
@@ -41,6 +45,8 @@ const LoginPage = () => {
     }
   }, [setValue]);
 
+  const [isRestoreAccountPopupOpen, setIsRestoreAccountPopupOpen] = useState(false);
+
   const onSubmit = async (data: { email: string; password: string }) => {
     try {
       const body: AuthLogin = { email: data.email, password: data.password };
@@ -50,9 +56,25 @@ const LoginPage = () => {
       localStorage.setItem('access_token', response.accessToken);
       localStorage.setItem('pintalk_id', response.id.toString());
       router.push(`/adminChat/${encodeURIComponent(response.id)}`);
-    } catch (error) {
-      setIsLoginFailed(true);
+    } catch (e: any) {
+      if (e.response?.status === 401) {
+        setIsLoginFailed(true);
+      } else {
+        setIsRestoreAccountPopupOpen(true);
+      }
     }
+  };
+
+  const closeRestoreAccountPopup = () => {
+    setIsRestoreAccountPopupOpen(false);
+  };
+
+  const handleRestoreAccount = async (data: AuthEmail) => {
+    console.log(data);
+    try {
+      await authApi.postRestore(data);
+      setIsRestoreAccountPopupOpen(false);
+    } catch (e) {}
   };
 
   return (
@@ -81,6 +103,7 @@ const LoginPage = () => {
                         type='email'
                         id='email'
                         placeholder='이메일을 입력해주세요'
+                        autoComplete='email'
                         className={`w-full h-12 px-4 py-2 border border-solid ${
                           isLoginFailed ? 'border-custom_red bg-red-50' : 'border-gray-300'
                         } rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
@@ -102,13 +125,24 @@ const LoginPage = () => {
                     <div className='flex relative xl:w-72 w-80'>
                       <input
                         {...register('password', { required: true })}
-                        type='password'
+                        type={showPassword ? 'text' : 'password'}
                         id='password'
                         placeholder='비밀번호를 입력해주세요'
+                        autoComplete='current-password'
                         className={`w-full h-12 px-4 py-2 border border-solid ${
                           isLoginFailed ? 'border-custom_red bg-red-50' : 'border-gray-300'
                         } rounded-lg mb-5 placeholder:text-text-5 placeholder:text-14`}
                       />
+                      <button
+                        type='button'
+                        onClick={toggleShowPassword}
+                        className='absolute right-[11px] top-[12px]'>
+                        {showPassword ? (
+                          <img width={24} src='/eye-closed.svg' alt='eye-closed' />
+                        ) : (
+                          <img width={24} src='/eye-open.svg' alt='eye-open' />
+                        )}
+                      </button>
                       {isLoginFailed && (
                         <div className='absolute right-[10px] top-[12px]'>
                           <div>{svgWarning}</div>
@@ -124,6 +158,14 @@ const LoginPage = () => {
                     } rounded-full text-white`}>
                     로그인
                   </button>
+                  {isRestoreAccountPopupOpen && (
+                    <RestoreAccountPopup
+                      isOpen={isRestoreAccountPopupOpen}
+                      onClose={closeRestoreAccountPopup}
+                      onRestore={handleRestoreAccount}
+                      email={email}
+                    />
+                  )}
                 </form>
                 <div className='flex justify-between xl:w-72 w-80 mt-4 text-text-4 text-12'>
                   <div

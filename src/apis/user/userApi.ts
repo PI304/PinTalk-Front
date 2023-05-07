@@ -1,5 +1,5 @@
 import instance from '@apis/_axios/instance';
-import { UserId, UserImage, UserProfile } from './userApi.type';
+import { UserId, UserImage, UserProfile, onlineStatus } from './userApi.type';
 
 export class UserApi {
   async getUserDataById({ id }: UserId) {
@@ -28,6 +28,14 @@ export class UserApi {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+    });
+    return data;
+  }
+  async patchUserConfigById({ id }: UserId, use_online_status: onlineStatus) {
+    const { data } = await instance({
+      method: 'PATCH',
+      url: `users/${id}/configs/`,
+      data: use_online_status,
     });
     return data;
   }

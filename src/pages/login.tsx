@@ -1,4 +1,4 @@
-import { LogoutLayout } from '@components/common';
+import LogoutLayoutM from '@components/common/LogoutLayoutM';
 import { LoginPage } from '@components/Login';
 import Seo from '@constants/seo';
 import CustomHead from '@seo/CustomHead';
@@ -14,5 +14,5 @@ export default function main() {
 }
 
 main.getLayout = (page: ReactElement) => {
-  return <LogoutLayout>{page}</LogoutLayout>;
+  return <LogoutLayoutM>{page}</LogoutLayoutM>;
 };

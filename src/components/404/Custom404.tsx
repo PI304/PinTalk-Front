@@ -5,7 +5,7 @@ const Custom404 = () => {
   return (
     <div className='flex flex-col justify-center items-center'>
       <div className='w-[134px] mt-32'>
-        <Image src='/404.svg' alt='404 image' width={134} height={134} />
+        <Image src='/404.svg' alt='404 image' width={134} height={134} priority />
       </div>
       <div className='font-Montserrat text-[52px] font-bold text-blue-main mt-4'>Error 404</div>
       <div className='text-22 font-PretendardRegular text-text-4 text-center mt-8'>
