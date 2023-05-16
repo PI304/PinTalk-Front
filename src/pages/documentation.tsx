@@ -1,18 +1,18 @@
 import { ReactElement } from 'react';
 import { LogoutLayoutD } from '@components/common';
-import { DescriptionPage } from '@components/description';
+import { DocumentationPage } from '@components/documentation';
 import CustomHead from '@seo/CustomHead';
 import Seo from '@constants/seo';
 
-export default function description() {
+export default function documentation() {
   return (
     <>
-      <CustomHead title={Seo.Title.description} />
-      <DescriptionPage />
+      <CustomHead title={Seo.Title.documentation} />
+      <DocumentationPage />
     </>
   );
 }
 
-description.getLayout = (page: ReactElement) => {
+documentation.getLayout = (page: ReactElement) => {
   return <LogoutLayoutD>{page}</LogoutLayoutD>;
 };

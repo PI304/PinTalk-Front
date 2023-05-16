@@ -131,31 +131,34 @@ const AdminChatPage = () => {
   ) => {
     setOffset(0);
     setChatRoomGuest(chatRoomGuest);
+    setMessages([]);
     if (activeChat === chatRoomId) {
       setIsChatActive(false);
       setActiveChat(null);
+
       if (chatSocket.current) {
         chatSocket.current.close();
+        chatSocket.current = null;
       }
-      if (statusSocket.current) {
+      if (statusSocket.current && statusSocket.current.readyState !== WebSocket.CLOSED) {
         statusSocket.current.close();
+        statusSocket.current = null;
       }
     } else {
       const data = await chatApi.GetChatRoomMessage({ id: chatRoomId, limit: 20, offset: 0 });
       const data2 = await chatApi.getChatRoomById({ id: chatRoomId });
       setUuid(data2.host.uuid);
       setIsClosed(data2.isClosed);
-      if (data && data.results && Array.isArray(data.results)) {
-        setMessageCount(data.count);
-        setMessages(data.results);
-        setActiveChat(chatRoomId);
-        setIsChatActive(true);
-        setChatId(chatRoomId);
-      } else {
-        console.error('Invalid messages data:', data);
-      }
+      setActiveChat(chatRoomId);
+      setIsChatActive(true);
+      setChatId(chatRoomId);
+      // if (data && data.results && Array.isArray(data.results)) {
+      //   setMessageCount(data.count);
+      //   setMessages(data.results);
+      // } else {
+      //   console.error('Invalid messages data:', data);
+      // }
 
-      // WebSocket connection
       if (chatSocket.current) {
         chatSocket.current.close();
       }
@@ -164,26 +167,35 @@ const AdminChatPage = () => {
       const websocketURI = createWebSocketURI(chatRoomName, token);
       chatSocket.current = new WebSocket(websocketURI);
       chatSocket.current.onopen = () => {
-        console.log('connected');
+        console.log('chatSocket connected');
       };
 
       chatSocket.current.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        if (data.is_host === 'false') {
+        console.log(data);
+        if (data.data && Array.isArray(data.data)) {
+          setMessages((prevMessages) => [...prevMessages, ...data.data]);
+        } else if (data.type === 'chat_message') {
           setMessages((prevMessages) => [...prevMessages, data]);
-        } else if (data.type === 'notice') {
-          // 알림 메시지 처리
         }
+        setMessageCount(messages.length);
+        console.log(messages.length);
       };
 
       chatSocket.current.onclose = (event) => {
-        console.log('disconnected');
+        console.log('chatSocket disconnected');
       };
     }
   };
-
   useEffect(() => {
-    if (uuid && token) {
+    const onlineStatus = JSON.parse(localStorage.getItem('pintalk_online_status') || 'false');
+
+    if (onlineStatus && uuid && token && activeChat) {
+      if (statusSocket.current) {
+        statusSocket.current.close();
+        statusSocket.current = null;
+      }
+
       const statusURI = `wss://api.pintalk.app/ws/status/${uuid}/?token=${token}`;
       statusSocket.current = new WebSocket(statusURI);
       statusSocket.current.onopen = () => {
@@ -193,15 +205,14 @@ const AdminChatPage = () => {
       statusSocket.current.onclose = (event) => {
         console.log('Status socket disconnected');
       };
-    }
-
-    // Clean up websocket connection
-    return () => {
+    } else {
       if (statusSocket.current) {
         statusSocket.current.close();
+        statusSocket.current = null;
       }
-    };
-  }, [uuid, token]);
+    }
+  }, [activeChat]);
+
   const timeAgo = (dateTime: string): string => {
     const currentTime = new Date();
     const messageTime = new Date(dateTime);
@@ -247,11 +258,19 @@ const AdminChatPage = () => {
       console.error('Invalid messages data:', data);
     }
   };
-  const handleSendButtonClick = async () => {
+  const handleSendButtonClick = () => {
     if (inputMessage.trim() !== '') {
-      sendMessage(inputMessage);
+      if (chatSocket.current && chatSocket.current.readyState === WebSocket.OPEN) {
+        chatSocket.current.send(
+          JSON.stringify({
+            type: 'chat_message',
+            is_host: true,
+            message: inputMessage,
+            datetime: getDatetime(),
+          }),
+        );
+      }
       handleInputChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
-      await updateMessages();
     }
   };
 
@@ -291,11 +310,20 @@ const AdminChatPage = () => {
     return !isSameDay(prev, current);
   };
 
+  const renderTextWithLineBreaks = (text: string) => {
+    return text.split('\n').map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  };
+
   const renderMessage = (message: chatMessage, index: number) => {
     const isCurrentResult =
       currentResultIndex !== -1 && index === searchResults[currentResultIndex];
-    const position = message.isHost ? 'text-right' : 'text-left';
-    const messageClass = message.isHost
+    const position = message.is_host ? 'text-right' : 'text-left';
+    const messageClass = message.is_host
       ? isCurrentResult
         ? 'bg-yellow-300 rounded-bl-xl  text-white'
         : 'bg-gradient-to-r from-blue-main to-gradi-3 rounded-bl-xl  text-white'
@@ -303,7 +331,7 @@ const AdminChatPage = () => {
 
     const parsedDate = parseISO(message.datetime);
     const formattedTime = format(parsedDate, 'a h:mm');
-    const timePosition = message.isHost ? 'ml-2' : 'mr-2';
+    const timePosition = message.is_host ? 'ml-2' : 'mr-2';
 
     const showDate = index !== 0 && isNewDay(messages[index - 1].datetime, message.datetime);
 
@@ -319,7 +347,7 @@ const AdminChatPage = () => {
           </div>
         )}
         <div className='flex items-center'>
-          {!message.isHost && (
+          {!message.is_host && (
             <div className='rounded-full bg-blue-icon w-[40px] h-[40px] flex items-center justify-center mr-3'>
               <Image
                 className='my-auto'
@@ -332,15 +360,15 @@ const AdminChatPage = () => {
           )}
           <div className={`my-2 ${position} w-full`}>
             <div className={`inline-flex items-end`}>
-              {message.isHost && (
+              {message.is_host && (
                 <div className={`text-12 text-text-6 mr-2 ${timePosition}`}>{formattedTime}</div>
               )}
               <div
                 id={`message-${index}`}
                 className={`px-4 py-2 rounded-t-xl ${messageClass} ${messageHighlightClass}`}>
-                {message.message}
+                {renderTextWithLineBreaks(message.message)}
               </div>
-              {!message.isHost && (
+              {!message.is_host && (
                 <div className={`text-12 text-text-6 ml-2 ${timePosition}`}>{formattedTime}</div>
               )}
             </div>
@@ -506,7 +534,7 @@ const AdminChatPage = () => {
           filteredClosedNotPinnedChatRooms.length > 0) && ( */}
       <div className='flex h-full'>
         <div className='flex flex-col'>
-          <div className='bg-BG-4 min-h-[100px] w-full border-b-[2px] flex justify-center items-center'>
+          <div className='bg-BG-4 min-h-[100px] w-full border-b-[2px] flex justify-center items-center border-r-[2px]'>
             <div>{svgSearch}</div>
             <input
               value={inputSearch}
@@ -514,7 +542,7 @@ const AdminChatPage = () => {
               className='bg-BG-4 w-[415px] text-text-5 pl-2 focus:outline-none'
               placeholder='닉네임을 검색해보세요'></input>
           </div>
-          <div className='w-[520px] pt-7 px-10 h-[calc(100vh-100px)] overflow-y-auto'>
+          <div className='w-[520px] pt-7 px-10 h-[calc(100vh-100px)] overflow-y-auto border-r-[2px]'>
             {(filteredNotClosedPinnedChatRooms.length > 0 ||
               filteredNotClosedNotPinnedChatRooms.length > 0) && (
               <div>
@@ -617,7 +645,7 @@ const AdminChatPage = () => {
           {isChatActive ? (
             <>
               <div className='bg-BG-4 min-h-[100px] w-full border-b-[2px] flex justify-between items-center'>
-                <div className=' border-l-[2px] min-h-[75px] w-full flex justify-between items-center pl-8 pr-10'>
+                <div className='min-h-[75px] w-full flex justify-between items-center pl-8 pr-10'>
                   <div className='flex items-center'>
                     <div className='rounded-full bg-blue-icon w-[40px] h-[40px] flex items-center justify-center mr-3'>
                       <Image
@@ -680,7 +708,7 @@ const AdminChatPage = () => {
                 <div
                   className={`flex-1 overflow-y-auto ${
                     isSearchOpen ? 'h-[calc(100vh-315px)]' : 'h-[calc(100vh-260px)]'
-                  } flex flex-col-reverse chat-window px-6 py-8`}>
+                  } flex flex-col chat-window px-6 py-8`}>
                   {messages.map((message, index) => renderMessage(message, index))}
                 </div>
                 {isSearchOpen && (

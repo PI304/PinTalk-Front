@@ -39,7 +39,7 @@ const AdminSettingPage = () => {
     return false;
   };
 
-  const [isToggled, setIsToggled] = useState(getOnlineStatus() || false);
+  const [isToggled, setIsToggled] = useState(getOnlineStatus());
 
   useEffect(() => {
     const status = getOnlineStatus();

@@ -2,7 +2,7 @@ import CodeContent from './CodeContent';
 import Content from './Content';
 import { useState, useEffect } from 'react';
 
-const Description = () => {
+const DocumentationPage = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [scrollToId, setScrollToId] = useState('');
 
@@ -187,4 +187,4 @@ const Description = () => {
   );
 };
 
-export default Description;
+export default DocumentationPage;

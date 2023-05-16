@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
+  svgHelp,
   svgMessageOff,
   svgOut,
   svgPersonOff,
@@ -78,6 +79,12 @@ const AdminLayout = ({ children }: ChildrenType) => {
                   </div>
                 </div>
               </Link>
+              <Link href='/documentation'>
+                <div className='flex items-center py-3 pl-7 '>
+                  <div className='mr-3'>{svgHelp}</div>
+                  <div className='text-blue-sub'>도움말</div>
+                </div>
+              </Link>
             </div>
             <div className='text-16 w-full md:flex md-min:hidden'>
               <Link
@@ -120,6 +127,15 @@ const AdminLayout = ({ children }: ChildrenType) => {
                     isSettingActive ? '' : 'bg-transparent'
                   }`}
                 />
+              </Link>
+              <Link
+                href='/documentation'
+                className='w-1/3 flex justify-center flex-col items-center'>
+                <div className='flex items-center py-3 '>
+                  <div className='mr-3'>{svgHelp}</div>
+                  <div className='text-white'>도움말</div>
+                </div>
+                <div className='bg-blue-deep h-[6px] w-full  bg-transparent' />
               </Link>
             </div>
           </div>

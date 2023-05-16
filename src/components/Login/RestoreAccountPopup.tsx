@@ -23,7 +23,7 @@ const RestoreAccountPopup = ({ isOpen, onClose, onRestore, email }: RestoreAccou
         <div className='mb-7 text-center'>
           계정을 복구하시겠어요?
           <br />
-          복구시 이메일로 임시 비밀번호가 전송돼요
+          복구 시 이메일로 임시 비밀번호가 전송돼요
           <br />
         </div>
         <button
