@@ -6,7 +6,7 @@ const Seo = {
     findPW: 'FindPW',
     chat: 'Chat',
     profile: 'Profile',
-    description: 'Description',
+    documentation: 'Documentation',
     notFound: '404',
   },
 } as const;

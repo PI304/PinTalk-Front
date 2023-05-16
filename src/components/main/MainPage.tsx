@@ -59,7 +59,7 @@ const MainPage = () => {
                 <br />
                 실시간으로 채팅을 주고받아보세요
               </div>
-              <Link href='/description'>
+              <Link href='/documentation'>
                 <div
                   className='bg-BG-1 font-PretendardMedium text-text-3 xl:text-16 text-19 xl:w-[140px] xl:h-[44px] w-[159px] h-[53px] rounded-3xl flex justify-center items-center mt-8'
                   onClick={() => {
@@ -140,7 +140,7 @@ const MainPage = () => {
                 <br />
                 핀톡에서는 한 번에 내보내고 저장할 수 있어요
               </div>
-              <Link href='/description'>
+              <Link href='/documentation'>
                 <div
                   className='bg-BG-1 font-PretendardMedium text-text-3 xl:text-16 text-19 xl:w-[140px] xl:h-[44px] w-[159px] h-[53px] rounded-3xl flex justify-center items-center mt-8'
                   onClick={() => {
@@ -209,7 +209,7 @@ const MainPage = () => {
                 <br />
                 무드로 전체적인 룩앤필을 완성해 보세요
               </div>
-              <Link href='/description'>
+              <Link href='/documentation'>
                 <div
                   className='bg-BG-1 font-PretendardMedium text-text-3 xl:text-16 text-19 xl:w-[140px] xl:h-[44px] w-[159px] h-[53px] rounded-3xl flex justify-center items-center mt-8'
                   onClick={() => {
@@ -285,7 +285,7 @@ const MainPage = () => {
               <div className='ml-3'>{svgArrowWhite}</div>
             </div>
           </Link>
-          <Link href='/description'>
+          <Link href='/documentation'>
             <div
               className='bg-BG-1 font-PretendardMedium text-text-3 xl:text-16 text-24 xl:w-[140px] xl:h-[44px] w-[200px] h-[65px] rounded-full flex justify-center items-center'
               onClick={() => {

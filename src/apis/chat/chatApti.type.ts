@@ -23,7 +23,7 @@ export type chatRoom = {
 export type chatMessage = {
   chatroom: number;
   message: string;
-  isHost: boolean;
+  is_host: boolean;
   datetime: string;
   id: number;
 };

@@ -57,7 +57,7 @@ const LoginPage = () => {
       localStorage.setItem('pintalk_id', response.id.toString());
       router.push(`/adminChat/${encodeURIComponent(response.id)}`);
     } catch (e: any) {
-      if (e.response?.status === 401) {
+      if (e.response?.status === 409) {
         setIsLoginFailed(true);
       } else {
         setIsRestoreAccountPopupOpen(true);

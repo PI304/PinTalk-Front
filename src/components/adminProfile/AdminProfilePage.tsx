@@ -335,7 +335,7 @@ const AdminProfilePage = () => {
                   <div className='flex mt-7 xl:mt-5 items-center'>
                     <div className='xl:w-[100px] w-[120px]'>Secret Key</div>
                     <div className='xl:mr-6 mr-12 w-1/2 overflow-auto whitespace-nowrap'>
-                      {userData?.secretKey}
+                      {userData?.secretKey ? '*'.repeat(userData.secretKey.length) : ''}
                     </div>
                     <button
                       onClick={() => copyToClipboard(userData?.secretKey)}

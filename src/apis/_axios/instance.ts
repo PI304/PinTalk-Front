@@ -20,10 +20,6 @@ const unsetAuthorHeader = () => {
 const refreshToken = async () => {
   try {
     const response = await instance2.post('auth/token/refresh/');
-    console.log(response);
-    if (response.status === 204) {
-      return { noRefreshNeeded: true };
-    }
     return response.data;
   } catch (error) {
     console.error('Failed to refresh token:', error);
@@ -68,8 +64,6 @@ instance.interceptors.response.use(
         localStorage.setItem('access_token', token.access);
         reqData.headers.Authorization = `Bearer ${token?.access}`;
         return requestWithoutInterceptor(reqData);
-      } else if (token?.noRefreshNeeded) {
-        return Promise.reject(error);
       } else {
         delete reqData.headers.Authorization;
         localStorage.removeItem('pintalk_id');
